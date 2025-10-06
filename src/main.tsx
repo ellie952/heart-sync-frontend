@@ -9,18 +9,48 @@ import ProfilePage from './pages/ProfilePage/ProfilePage';
 import SettingsPage from './pages/SettingsPage/SettingsPage';
 import NewPlaylistPage from './pages/NewPlaylistPage/NewPlaylistPage';
 import NavBar from './components/NavBar/NavBar';
+import PasswordResetForm from './components/PasswordResetForm/PasswordResetForm';
+import MainSettings from './components/MainSettings/MainSettings';
+import EditProfileForm from './components/EditProfileForm/EditProfileForm';
+import DeleteProfileForm from './components/DeleteProfileForm/DeleteProfileForm';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <NavBar />
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<DashboardPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/settings" element={<SettingsPage />} />
-        <Route path="/new-playlist" element={<NewPlaylistPage />} />
+        <Route
+          path="/"
+          element={<DashboardPage />}
+        />
+        <Route
+          path="/register"
+          element={<RegisterPage />}
+        />
+        <Route
+          path="/login"
+          element={<LoginPage />}
+        />
+        <Route
+          path="/profile"
+          element={<ProfilePage />}
+        />
+        <Route
+          path="/settings"
+          element={<SettingsPage />}
+          children={
+            <>
+              <Route index={true} element={<MainSettings />} />
+              <Route path="edit-profile" element={<EditProfileForm />} />
+              <Route path="password-reset" element={<PasswordResetForm />} />
+              <Route path="delete-profile" element={<DeleteProfileForm />} />
+            </>
+          }
+        />
+        <Route
+          path="/new-playlist"
+          element={<NewPlaylistPage />}
+        />
       </Routes>
     </BrowserRouter>
   </StrictMode>,
