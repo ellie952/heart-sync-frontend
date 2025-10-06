@@ -7,7 +7,7 @@ import RegisterPage from './pages/RegisterPage/RegisterPage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import SettingsPage from './pages/SettingsPage/SettingsPage';
-import NewPlaylistPage from './pages/NewPlaylistPage/NewPlaylistPage';
+import NewPostPage from './pages/NewPostPage/NewPostPage';
 import NavBar from './components/NavBar/NavBar';
 import PasswordResetForm from './components/PasswordResetForm/PasswordResetForm';
 import MainSettings from './components/MainSettings/MainSettings';
@@ -49,7 +49,7 @@ createRoot(document.getElementById('root')!).render(
         />
         <Route
           path="/new-playlist"
-          element={<NewPlaylistPage />}
+          element={<NewPostPage />}
         />
       </Routes>
     </BrowserRouter>
