@@ -2,10 +2,10 @@ import RegisterForm from "../../components/RegisterForm/RegisterForm"
 
 function RegisterPage() {
     return (
-        <>
-            <div>RegisterPage</div>
+        <div>
+            <h1>Register</h1>
             <RegisterForm />
-        </>
+        </div>
     )
 }
 

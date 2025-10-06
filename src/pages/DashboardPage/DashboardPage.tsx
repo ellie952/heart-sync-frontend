@@ -1,6 +1,11 @@
+import PostList from "../../components/PostList/PostList"
+
 function DashboardPage() {
     return (
-        <div>DashboardPage</div>
+        <div>
+            <h1>Dashboard</h1>
+            <PostList />
+        </div>
     )
 }
 

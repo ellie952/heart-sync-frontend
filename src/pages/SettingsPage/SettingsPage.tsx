@@ -2,10 +2,10 @@ import { Outlet } from "react-router"
 
 function SettingsPage() {
     return (
-        <>
-            <div>SettingsPage</div>
+        <div>
+            <h1>Settings</h1>
             <Outlet />
-        </>
+        </div>
     )
 }
 
