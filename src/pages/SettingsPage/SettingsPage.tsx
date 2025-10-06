@@ -1,6 +1,11 @@
+import { Outlet } from "react-router"
+
 function SettingsPage() {
     return (
-        <div>SettingsPage</div>
+        <>
+            <div>SettingsPage</div>
+            <Outlet />
+        </>
     )
 }
 
