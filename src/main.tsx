@@ -8,9 +8,11 @@ import LoginPage from './pages/LoginPage/LoginPage';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import SettingsPage from './pages/SettingsPage/SettingsPage';
 import NewPlaylistPage from './pages/NewPlaylistPage/NewPlaylistPage';
+import NavBar from './components/NavBar/NavBar';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
+    <NavBar />
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<DashboardPage />} />
