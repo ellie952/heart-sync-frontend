@@ -1,21 +1,25 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
+import type { PostPropsType } from "../../interfaces/PostPropsType";
 
-function Post() {
-    const [title, setTitle] = useState("Sample Post");
-    const [activity, setActivity] = useState("Run");
-    const [description, setDescription] = useState("This is a sample post.");
+function Post({ id, title, activity, description, updatePosts }: PostPropsType) {
+    const [post, setPost] = useState({
+        id: id,
+        title: title,
+        activity: activity,
+        description: description
+    });
     const [isEditing, setIsEditing] = useState(false);
 
     function handleTitle(e: ChangeEvent<HTMLInputElement>) {
-        setTitle(e.target.value);
+        setPost({ ...post, title: e.target.value });
     }
 
     function handleActivity(e: ChangeEvent<HTMLInputElement>) {
-        setActivity(e.target.value);
+        setPost({ ...post, activity: e.target.value });
     }
 
     function handleDescription(e: ChangeEvent<HTMLInputElement>) {
-        setDescription(e.target.value);
+        setPost({ ...post, description: e.target.value });
     }
 
     function handleEditButton() {
@@ -24,6 +28,7 @@ function Post() {
 
     function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
+        updatePosts(post);
         setIsEditing(false);
     }
 
@@ -34,19 +39,19 @@ function Post() {
                     <input
                         type="text"
                         placeholder="Title"
-                        value={title}
+                        value={post.title}
                         onChange={handleTitle}
                     />
                     <input
                         type="text"
                         placeholder="Activity"
-                        value={activity}
+                        value={post.activity}
                         onChange={handleActivity}
                     />
                     <input
                         type="text"
                         placeholder="Description"
-                        value={description}
+                        value={post.description}
                         onChange={handleDescription}
                     />
                     <input type="submit" />
@@ -56,8 +61,12 @@ function Post() {
                     <h3>
                         {title}: <span>{activity}</span>
                     </h3>
-                    <p>{description}</p>
-                    <button onClick={handleEditButton}>Edit</button>
+                    <p>
+                        {description}
+                    </p>
+                    <button onClick={handleEditButton}>
+                        Edit
+                    </button>
                 </>
             )}
         </div>
