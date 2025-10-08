@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState, type ChangeEvent, type FormEvent } from "react";
+import { useNavigate } from "react-router";
 
 function RegisterForm() {
     const [username, setUsername] = useState("");
@@ -9,6 +10,8 @@ function RegisterForm() {
     const [hasError, setHasError] = useState(false)
 
     const USER_API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/users`;
+
+    const navigate = useNavigate();
 
     function handleUsername(e: ChangeEvent<HTMLInputElement>) {
         setUsername(e.target.value);
@@ -33,27 +36,27 @@ function RegisterForm() {
         if (password !== retypedPassword) {
             setHasError(true);
             console.log("Password fields must match.");
-        } else {
-            try {
-                const response = await axios.post(USER_API_BASE_URL, {
-                    username,
-                    password,
-                    email
-                }, {
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                });
+            return;
+        }
 
-                console.log(`Created user ${username}.`);
-                return response.data;
-            } catch (error: unknown) {
-                setHasError(true);
-                if (axios.isAxiosError(error)) {
-                    console.error("Error registering user:", error.response?.data || error.message);
-                } else {
-                    console.error("Unexpected error:", error);
+        try {
+            await axios.post(USER_API_BASE_URL, {
+                username,
+                password,
+                email
+            }, {
+                headers: {
+                    "Content-Type": "application/json"
                 }
+            });
+
+            navigate("/login");
+        } catch (error: unknown) {
+            setHasError(true);
+            if (axios.isAxiosError(error)) {
+                console.error("Error registering user:", error.response?.data || error.message);
+            } else {
+                console.error("Unexpected error:", error);
             }
         }
     }

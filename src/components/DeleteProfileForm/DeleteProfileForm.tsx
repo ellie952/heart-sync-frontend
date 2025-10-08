@@ -26,12 +26,14 @@ function DeleteProfileForm() {
         if (!username || !password) {
             setHasError(true);
             console.error("Username and password required.");
+            return;
         }
 
         const token = localStorage.getItem("TOKEN");
         if (!token) {
             setHasError(true);
             console.error("You must be logged in to delete your profile.");
+            return;
         }
 
         try {
