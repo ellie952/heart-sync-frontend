@@ -13,6 +13,7 @@ import PasswordResetForm from './components/PasswordResetForm/PasswordResetForm'
 import MainSettings from './components/MainSettings/MainSettings';
 import EditProfileForm from './components/EditProfileForm/EditProfileForm';
 import DeleteProfileForm from './components/DeleteProfileForm/DeleteProfileForm';
+import GeneratePlaylistPage from './pages/GeneratePlaylistPage/GeneratePlaylistPage';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -47,8 +48,12 @@ createRoot(document.getElementById('root')!).render(
             </>
           }
         />
+         <Route
+          path="/generate-playlist"
+          element={<GeneratePlaylistPage />}
+        />
         <Route
-          path="/new-playlist"
+          path="/new-post"
           element={<NewPostPage />}
         />
       </Routes>
