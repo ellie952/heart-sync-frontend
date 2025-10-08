@@ -1,8 +1,15 @@
+import axios from "axios";
 import { useState, type ChangeEvent, type FormEvent } from "react";
+import { useNavigate } from "react-router";
 
 function LoginForm() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [hasError, setHasError] = useState(false);
+
+    const navigate = useNavigate();
+
+    const USER_API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/users`;
 
     function handleUsername(e: ChangeEvent<HTMLInputElement>) {
         setUsername(e.target.value);
@@ -14,8 +21,32 @@ function LoginForm() {
 
     async function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        console.log("Password fields must match.")
+        setHasError(false);
 
+        try {
+            const response = await axios.post(`${USER_API_BASE_URL}/login`, {
+                username,
+                password
+            }, {
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+
+            const token = response.data;
+
+            localStorage.setItem("TOKEN", token);
+            localStorage.setItem("USERNAME", username);
+
+            navigate("/");
+        } catch (error: unknown) {
+            setHasError(true);
+            if (axios.isAxiosError(error)) {
+                console.error("Error registering user:", error.response?.data || error.message);
+            } else {
+                console.error("Unexpected error:", error);
+            }
+        }
     }
 
     return (
@@ -33,6 +64,11 @@ function LoginForm() {
                 onChange={handlePassword}
             />
             <input type="submit" />
+            {hasError && (
+                <p>
+                    Login failed: All fields must be valid.
+                </p>
+            )}
         </form>
     )
 }
