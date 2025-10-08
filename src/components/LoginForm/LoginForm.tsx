@@ -33,7 +33,7 @@ function LoginForm() {
                 }
             })
 
-            const token = response.data;
+            const token = response.data.token;
 
             localStorage.setItem("TOKEN", token);
             localStorage.setItem("USERNAME", username);
