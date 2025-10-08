@@ -1,22 +1,46 @@
 import axios from "axios";
-import { useState, type ChangeEvent, type FormEvent } from "react";
+import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import { useNavigate } from "react-router";
 
 function EditProfileForm() {
-    const [username, setUsername] = useState("");
-    const [email, setEmail] = useState("");
+    const [prevUsername, setPrevUsername] = useState("");
+    const [newUsername, setNewUsername] = useState("");
     const [hasError, setHasError] = useState(false);
 
     const USER_API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/users`;
 
     const navigate = useNavigate();
 
-    function handleUsername(e: ChangeEvent<HTMLInputElement>) {
-        setUsername(e.target.value);
-    }
+    useEffect(() => {
+        async function getUserData() {
+            const token = localStorage.getItem("TOKEN");
+            if (!token) {
+                setHasError(true);
+                console.error("No token found.");
+                return;
+            }
 
-    function handleEmail(e: ChangeEvent<HTMLInputElement>) {
-        setEmail(e.target.value);
+            try {
+                const response = await axios.get(`${USER_API_BASE_URL}/profile`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+
+                const { username } = response.data.data;
+                setPrevUsername(username);
+                setNewUsername(username);
+            } catch (error) {
+                setHasError(true);
+                console.error("Error fetching user data:", error);
+            }
+        }
+
+        getUserData()
+    }, [])
+
+    function handleNewUsername(e: ChangeEvent<HTMLInputElement>) {
+        setNewUsername(e.target.value);
     }
 
     async function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -30,13 +54,13 @@ function EditProfileForm() {
             return;
         }
 
-        if (username && email) {
+        if (newUsername) {
             try {
                 await axios.put(
-                    `${USER_API_BASE_URL}/update`, // endpoint doesn't exist, we'll need something like this or similar
+                    `${USER_API_BASE_URL}/username`,
                     {
-                        username,
-                        email
+                        oldUsername: prevUsername,
+                        newUsername: newUsername
                     },
                     {
                         headers: {
@@ -63,15 +87,8 @@ function EditProfileForm() {
             <input
                 type="text"
                 placeholder="Username"
-                value={username}
-                onChange={handleUsername}
-                required
-            />
-            <input
-                type="email"
-                placeholder="email"
-                value={email}
-                onChange={handleEmail}
+                value={newUsername}
+                onChange={handleNewUsername}
                 required
             />
             <input type="submit" />
