@@ -30,12 +30,16 @@ export default function AuthProvider({ children }: AuthProviderProps) {
 
             setToken(token);
             setUsername(username);
+
+            return token;
         } catch (error: unknown) {
             if (axios.isAxiosError(error)) {
                 console.error("Error logging in:", error.response?.data || error.message);
             } else {
                 console.error("Unexpected error:", error);
             }
+
+            return null;
         }
     }
 

@@ -2,6 +2,8 @@ import axios from "axios";
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import { useNavigate } from "react-router";
 import { useAuth } from "../../contexts/AuthContext";
+import type { JwtPayloadType } from "../../interfaces/JwtPayloadType";
+import { jwtDecode } from "jwt-decode";
 
 function LoginForm() {
     const [username, setUsername] = useState("");
@@ -25,9 +27,16 @@ function LoginForm() {
         setHasError(false);
 
         try {
-            await login(username, password);
+            const newToken = await login(username, password);
 
-            navigate("/dashboard");
+            if (newToken) {
+                const decodedToken = jwtDecode<JwtPayloadType>(newToken);
+                const userId = decodedToken.id;
+                navigate(`/dashboard/${userId}`);
+            } else {
+                setHasError(true);
+                console.error("Login failed: No token received.");
+            }
         } catch (error: unknown) {
             setHasError(true);
             if (axios.isAxiosError(error)) {
