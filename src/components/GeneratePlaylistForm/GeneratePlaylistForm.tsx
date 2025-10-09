@@ -26,7 +26,7 @@ function GeneratePlaylistForm(){
         setHasError(false);
 
         const token = localStorage.getItem("TOKEN");
-        const userId = localStorage.getItem("USERID");
+        const spotifyUserId = localStorage.getItem("SPOTIFY-USER-ID");
         
         // get spotify user 
         if (!token) {
@@ -35,9 +35,9 @@ function GeneratePlaylistForm(){
             return;
         }
 
-        if (!userId) {
-            console.log(userId)
-            console.log("User id invalid.")
+        if (!spotifyUserId) {
+            console.log(spotifyUserId)
+            console.log("Spotify user id invalid.")
             setHasError(true);
             return;
         }
@@ -50,7 +50,7 @@ function GeneratePlaylistForm(){
 
         try {
            // create playlist call 
-            const emptyPlaylist = await axios.post(`${USER_API_BASE_URL}/spotify/playlists/${userId}`, {
+            const emptyPlaylist = await axios.post(`${USER_API_BASE_URL}/spotify/playlists/${spotifyUserId}`, {
                 genre, 
                 artist, 
             }, {

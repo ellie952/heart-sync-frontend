@@ -15,6 +15,7 @@ import EditProfileForm from './components/EditProfileForm/EditProfileForm';
 import DeleteProfileForm from './components/DeleteProfileForm/DeleteProfileForm';
 import GeneratePlaylistPage from './pages/GeneratePlaylistPage/GeneratePlaylistPage';
 import SpotifyConnectionPage from './pages/SpotifyConnection/SpotifyConnection';
+import SpotifyTokenSuccess from './components/SpotifyTokenSucess/SpotifyTokenSuccess';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -60,6 +61,10 @@ createRoot(document.getElementById('root')!).render(
         <Route
           path="/spotify-connection"
           element={<SpotifyConnectionPage />}
+        />
+        <Route
+          path="/spotify-success"
+          element={<SpotifyTokenSuccess />}
         />
       </Routes>
     </BrowserRouter>
