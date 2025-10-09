@@ -1,39 +1,66 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { posts } from "../../data/posts";
 import type { PostType } from "../../interfaces/PostType";
 import Post from "../Post/Post"
+import axios from "axios";
+import { useAuth } from "../../contexts/AuthContext";
 
-function PostList() {
+function PostList({ userId }: { userId: string }) {
     const [postList, setPostList] = useState(posts);
+    const [hasError, setHasError] = useState(false);
 
-    function updatePosts(updatedPost: PostType) {
-        setPostList((): PostType[] => {
-            const newPostList = [];
+    const { token } = useAuth();
 
-            for (let i = 0; i < postList.length; i++) {
-                if (postList[i].id === updatedPost.id) {
-                    newPostList.push(updatedPost)
+    const POST_API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/posts`;
+
+    useEffect(() => {
+        async function getUserFeed() {
+            setHasError(false);
+
+            const feed: PostType[] = [];
+
+            try {
+                let response = await axios.get(`${POST_API_BASE_URL}/feed`, {
+                    headers: { Authorization: `Bearer ${token}`, },
+                });
+
+                feed.push(...response.data.data || null);
+
+                response = await axios.get(`${POST_API_BASE_URL}/post-history`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                    params: { userId },
+                });
+
+                feed.push(...response.data.data || null);
+
+                setPostList(feed);
+            } catch (error: unknown) {
+                setHasError(true);
+                if (axios.isAxiosError(error)) {
+                    console.error("Error fetching user feed:", error.response?.data || error.message);
                 } else {
-                    newPostList.push(postList[i]);
+                    console.error("Unexpected error:", error);
                 }
             }
+        }
 
-            return newPostList;
-        })
-    }
+        getUserFeed();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, token])
 
     return (
         <div>
-            {postList.map((post: PostType) => (
+            {!hasError ? postList.map((post: PostType) => (
                 <Post
                     key={post.id}
                     id={post.id}
                     title={post.title}
                     activity={post.activity}
                     description={post.description}
-                    updatePosts={updatePosts}
                 />
-            ))}
+            )) : (
+                <p>No posts found!</p>
+            )}
         </div>
     )
 } export default PostList

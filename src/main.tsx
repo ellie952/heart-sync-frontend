@@ -30,11 +30,11 @@ createRoot(document.getElementById('root')!).render(
             element={<LandingPage />}
           />
           <Route
-            path="/dashboard"
+            path="/dashboard/:userId"
             element={<DashboardPage />}
           />
           <Route
-            path="/profile"
+            path="/profile/:userId"
             element={<ProfilePage />}
           />
           <Route

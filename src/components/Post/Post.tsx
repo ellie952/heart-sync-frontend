@@ -1,7 +1,7 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
-import type { PostPropsType } from "../../interfaces/PostPropsType";
+import type { PostType } from "../../interfaces/PostType";
 
-function Post({ id, title, activity, description, updatePosts }: PostPropsType) {
+function Post({ id, title, activity, description }: PostType) {
     const [post, setPost] = useState({
         id: id,
         title: title,
@@ -28,7 +28,6 @@ function Post({ id, title, activity, description, updatePosts }: PostPropsType) 
 
     function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        updatePosts(post);
         setIsEditing(false);
     }
 

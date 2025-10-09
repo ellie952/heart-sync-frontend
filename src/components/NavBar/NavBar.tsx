@@ -23,12 +23,12 @@ function NavBar() {
                         {userId !== null && (
                             <>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="/dashboard">
+                                    <a className="nav-link" href={`/dashboard/${userId}`}>
                                         Dashboard
                                     </a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="/profile">
+                                    <a className="nav-link" href={`/profile/${userId}`}>
                                         Profile
                                     </a>
                                 </li>
@@ -44,21 +44,25 @@ function NavBar() {
                                 Register
                             </a>
                         </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="/generate-playlist">
-                                Generate Playlist
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="/new-post">
-                                New Post
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="/spotify-connection">
-                                Spotify Connection
-                            </a>
-                        </li>
+                        {userId !== null && (
+                            <>
+                                <li className="nav-item">
+                                    <a className="nav-link" href="/generate-playlist">
+                                        Generate Playlist
+                                    </a>
+                                </li>
+                                <li className="nav-item">
+                                    <a className="nav-link" href="/new-post">
+                                        New Post
+                                    </a>
+                                </li>
+                                <li className="nav-item">
+                                    <a className="nav-link" href="/spotify-connection">
+                                        Spotify Connection
+                                    </a>
+                                </li>
+                            </>
+                        )}
                         <li className="nav-item">
                             <a className="nav-link" href="/settings">
                                 Settings
