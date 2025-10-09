@@ -35,6 +35,11 @@ function NavBar() {
                                 New Post
                             </a>
                         </li>
+                         <li className="nav-item">
+                            <a className="nav-link" href="/spotify-connection">
+                                Spotify Connection
+                            </a>
+                        </li>
                         <li className="nav-item">
                             <a className="nav-link" href="/settings">
                                 Settings

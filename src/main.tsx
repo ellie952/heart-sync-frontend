@@ -14,6 +14,7 @@ import MainSettings from './components/MainSettings/MainSettings';
 import EditProfileForm from './components/EditProfileForm/EditProfileForm';
 import DeleteProfileForm from './components/DeleteProfileForm/DeleteProfileForm';
 import GeneratePlaylistPage from './pages/GeneratePlaylistPage/GeneratePlaylistPage';
+import SpotifyConnectionPage from './pages/SpotifyConnection/SpotifyConnection';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -55,6 +56,10 @@ createRoot(document.getElementById('root')!).render(
         <Route
           path="/new-post"
           element={<NewPostPage />}
+        />
+        <Route
+          path="/spotify-connection"
+          element={<SpotifyConnectionPage />}
         />
       </Routes>
     </BrowserRouter>
