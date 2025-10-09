@@ -27,13 +27,7 @@ function LoginForm() {
         try {
             await login(username, password);
 
-            const savedToken = localStorage.getItem("TOKEN");
-            if (!savedToken) {
-                setHasError(true);
-                console.error("Login failed: token not found.");
-            } else {
-                navigate("/dashboard");
-            }
+            navigate("/dashboard");
         } catch (error: unknown) {
             setHasError(true);
             if (axios.isAxiosError(error)) {

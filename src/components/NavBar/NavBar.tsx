@@ -11,8 +11,10 @@ function NavBar() {
         if (token) {
             const decodedToken = jwtDecode<JwtPayloadType>(token);
             setUserId(decodedToken.id);
+        } else {
+            setUserId(null);
         }
-    }, [token, userId])
+    }, [token])
 
     return (
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
