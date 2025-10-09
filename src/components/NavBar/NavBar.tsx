@@ -63,13 +63,13 @@ function NavBar() {
                                         Spotify Connection
                                     </a>
                                 </li>
+                                <li className="nav-item">
+                                    <a className="nav-link" href="/settings">
+                                        Settings
+                                    </a>
+                                </li>
                             </>
                         )}
-                        <li className="nav-item">
-                            <a className="nav-link" href="/settings">
-                                Settings
-                            </a>
-                        </li>
                     </ul>
                 </div>
             </div>
