@@ -29,7 +29,7 @@ function SpotifyConnection(){
             <button onClick={handleSpotifyConnection}>
                 Connect to Spotify
             </button>
-            {!hasError && isConnectedToSpotify &&(
+            {/* {!hasError && isConnectedToSpotify &&(
                 <p style={{color: 'green'}}>
                     Successfully connected to Spotify!
                 </p>
@@ -38,7 +38,7 @@ function SpotifyConnection(){
                 <p style={{color: 'red'}}>
                     Error connecting to Spotify. Please try again.
                 </p>
-            )}
+            )} */}
         </div>
     )
 }
