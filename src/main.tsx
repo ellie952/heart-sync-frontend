@@ -13,6 +13,9 @@ import PasswordResetForm from './components/PasswordResetForm/PasswordResetForm'
 import MainSettings from './components/MainSettings/MainSettings';
 import EditProfileForm from './components/EditProfileForm/EditProfileForm';
 import DeleteProfileForm from './components/DeleteProfileForm/DeleteProfileForm';
+import GeneratePlaylistPage from './pages/GeneratePlaylistPage/GeneratePlaylistPage';
+import SpotifyConnectionPage from './pages/SpotifyConnection/SpotifyConnection';
+import SpotifyTokenSuccess from './components/SpotifyTokenSucess/SpotifyTokenSuccess';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -47,9 +50,21 @@ createRoot(document.getElementById('root')!).render(
             </>
           }
         />
+         <Route
+          path="/generate-playlist"
+          element={<GeneratePlaylistPage />}
+        />
         <Route
-          path="/new-playlist"
+          path="/new-post"
           element={<NewPostPage />}
+        />
+        <Route
+          path="/spotify-connection"
+          element={<SpotifyConnectionPage />}
+        />
+        <Route
+          path="/spotify-success"
+          element={<SpotifyTokenSuccess />}
         />
       </Routes>
     </BrowserRouter>

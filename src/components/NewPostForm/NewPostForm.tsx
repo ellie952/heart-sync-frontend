@@ -2,8 +2,6 @@ import axios from "axios"
 import { useState, type ChangeEvent, type FormEvent } from "react"
 import { useNavigate } from "react-router";
 
-// TODO: getting bad jwt 
-
 function NewPostForm() {
     const [newPost, setNewPost] = useState({
         id: "",
@@ -52,6 +50,7 @@ function NewPostForm() {
                         }
                     })
                 navigate("/dashboard")
+                
             } catch (error: unknown) {
                 setHasError(true);
                 if (axios.isAxiosError(error)) {
