@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
-import { posts } from "../../data/posts";
 import type { PostType } from "../../interfaces/PostType";
 import Post from "../Post/Post"
 import axios from "axios";
 import { useAuth } from "../../contexts/AuthContext";
 
 function PostList({ userId }: { userId: string }) {
-    const [postList, setPostList] = useState(posts);
+    const [postList, setPostList] = useState<PostType[]>([]);
     const [hasError, setHasError] = useState(false);
 
     const { token } = useAuth();
@@ -50,7 +49,7 @@ function PostList({ userId }: { userId: string }) {
 
     return (
         <div>
-            {!hasError ? postList.map((post: PostType) => (
+            {!hasError || postList.length === 0 ? postList.map((post: PostType) => (
                 <Post
                     key={post.id}
                     id={post.id}
