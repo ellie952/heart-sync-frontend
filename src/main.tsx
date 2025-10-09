@@ -17,61 +17,64 @@ import GeneratePlaylistPage from './pages/GeneratePlaylistPage/GeneratePlaylistP
 import SpotifyConnectionPage from './pages/SpotifyConnection/SpotifyConnection';
 import SpotifyTokenSuccess from './components/SpotifyTokenSucess/SpotifyTokenSuccess';
 import LandingPage from './pages/LandingPage/LandingPage';
+import AuthProvider from './contexts/AuthContext';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <NavBar />
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="/"
-          element={<LandingPage />}
-        />
-        <Route
-          path="/dashboard"
-          element={<DashboardPage />}
-        />
-        <Route
-          path="/profile"
-          element={<ProfilePage />}
-        />
-        <Route
-          path="/login"
-          element={<LoginPage />}
-        />
-        <Route
-          path="/register"
-          element={<RegisterPage />}
-        />
-        <Route
-          path="/generate-playlist"
-          element={<GeneratePlaylistPage />}
-        />
-        <Route
-          path="/new-post"
-          element={<NewPostPage />}
-        />
-        <Route
-          path="/spotify-connection"
-          element={<SpotifyConnectionPage />}
-        />
-        <Route
-          path="/spotify-success"
-          element={<SpotifyTokenSuccess />}
-        />
-        <Route
-          path="/settings"
-          element={<SettingsPage />}
-          children={
-            <>
-              <Route index={true} element={<MainSettings />} />
-              <Route path="edit-profile" element={<EditProfileForm />} />
-              <Route path="password-reset" element={<PasswordResetForm />} />
-              <Route path="delete-profile" element={<DeleteProfileForm />} />
-            </>
-          }
-        />
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <NavBar />
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={<LandingPage />}
+          />
+          <Route
+            path="/dashboard"
+            element={<DashboardPage />}
+          />
+          <Route
+            path="/profile"
+            element={<ProfilePage />}
+          />
+          <Route
+            path="/login"
+            element={<LoginPage />}
+          />
+          <Route
+            path="/register"
+            element={<RegisterPage />}
+          />
+          <Route
+            path="/generate-playlist"
+            element={<GeneratePlaylistPage />}
+          />
+          <Route
+            path="/new-post"
+            element={<NewPostPage />}
+          />
+          <Route
+            path="/spotify-connection"
+            element={<SpotifyConnectionPage />}
+          />
+          <Route
+            path="/spotify-success"
+            element={<SpotifyTokenSuccess />}
+          />
+          <Route
+            path="/settings"
+            element={<SettingsPage />}
+            children={
+              <>
+                <Route index={true} element={<MainSettings />} />
+                <Route path="edit-profile" element={<EditProfileForm />} />
+                <Route path="password-reset" element={<PasswordResetForm />} />
+                <Route path="delete-profile" element={<DeleteProfileForm />} />
+              </>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   </StrictMode>,
 )
