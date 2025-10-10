@@ -2,7 +2,6 @@ import axios from "axios";
 import { useState, useEffect, type FormEvent } from "react";
 import { useNavigate } from "react-router";
 
-// view the generated playlist and export to spotify if you want to 
 
 interface ViewPlaylistProps {
     playlistId: string;
