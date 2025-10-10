@@ -54,6 +54,8 @@ function ProfilePage() {
                 });
 
                 const userPostHistory = response.data.data;
+                userPostHistory.sort((a: PostType, b: PostType) => Number(b.pst_timestamp) - Number(a.pst_timestamp));
+
                 setUserPosts(userPostHistory);
             } catch (error: unknown) {
                 setUserPosts([]);

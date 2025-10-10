@@ -31,6 +31,8 @@ function PostList({ userId }: { userId: string }) {
 
                 feed.push(...response.data.data || null);
 
+                feed.sort((a: PostType, b: PostType) => Number(b.pst_timestamp) - Number(a.pst_timestamp));
+
                 setPostList(feed);
             } catch (error: unknown) {
                 setHasError(true);
