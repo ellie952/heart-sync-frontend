@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-// import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 import axios from "axios";
 import type { UserType } from "../../interfaces/UserType";
 // import Post from "../../components/Post/Post";
@@ -11,8 +11,9 @@ function ProfilePage() {
     // const [userPosts, setUserPosts] = useState<PostType[]>([]);
     const [hasError, setHasError] = useState(false);
 
+    const { token, username } = useAuth();
+
     const { userId } = useParams();
-    console.log(userId);
 
     const USER_API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/users`;
     // const POST_API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/posts`;
@@ -21,8 +22,12 @@ function ProfilePage() {
         async function getUserProfile() {
             setHasError(false);
 
+            if (!userId) {
+                setHasError(true);
+                return;
+            };
+
             try {
-                if (!userId) return;
                 const response = await axios.get(`${USER_API_BASE_URL}/profile/${encodeURIComponent(userId)}`, {
                     headers: {
                         "Content-Type": "application/json"
@@ -41,7 +46,7 @@ function ProfilePage() {
             }
 
             // try {
-            //     const response = await axios.get(`${POST_API_BASE_URL}/post-history`, {
+            //     const response = await axios.get(`${POST_API_BASE_URL}/post-history?${encodeURIComponent(userId)}`, {
             //         headers: {
             //             Authorization: `Bearer ${token}`,
             //             "Content-Type": "application/json"
@@ -61,7 +66,32 @@ function ProfilePage() {
         }
 
         getUserProfile();
-    }, [])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId])
+
+    async function handleFollow() {
+        if (!user) return;
+
+        try {
+            await axios.put(
+                `${USER_API_BASE_URL}/following`,
+                { followingId: user.PK },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+        } catch (error: unknown) {
+            setHasError(true);
+            if (axios.isAxiosError(error)) {
+                console.error("Error following user:", error.response?.data || error.message);
+            } else {
+                console.error("Unexpected error:", error);
+            }
+        }
+    }
 
     return (
         <div>
@@ -69,6 +99,9 @@ function ProfilePage() {
                 <>
                     <h1>{user.username}</h1>
                     <p>Email: {user.email}</p>
+                    {username !== user.username && (
+                        <button onClick={handleFollow}>Follow</button>
+                    )}
                     {/* {userPosts.length !== 0 ? (
                         userPosts.map((post) => (
                             <Post
