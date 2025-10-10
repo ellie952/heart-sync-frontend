@@ -16,6 +16,7 @@ import DeleteProfileForm from './components/DeleteProfileForm/DeleteProfileForm'
 import GeneratePlaylistPage from './pages/GeneratePlaylistPage/GeneratePlaylistPage';
 import SpotifyConnectionPage from './pages/SpotifyConnection/SpotifyConnection';
 import SpotifyTokenSuccess from './components/SpotifyTokenSucess/SpotifyTokenSuccess';
+import LandingPage from './pages/LandingPage/LandingPage';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -24,33 +25,25 @@ createRoot(document.getElementById('root')!).render(
       <Routes>
         <Route
           path="/"
+          element={<LandingPage />}
+        />
+        <Route
+          path="/dashboard"
           element={<DashboardPage />}
-        />
-        <Route
-          path="/register"
-          element={<RegisterPage />}
-        />
-        <Route
-          path="/login"
-          element={<LoginPage />}
         />
         <Route
           path="/profile"
           element={<ProfilePage />}
         />
         <Route
-          path="/settings"
-          element={<SettingsPage />}
-          children={
-            <>
-              <Route index={true} element={<MainSettings />} />
-              <Route path="edit-profile" element={<EditProfileForm />} />
-              <Route path="password-reset" element={<PasswordResetForm />} />
-              <Route path="delete-profile" element={<DeleteProfileForm />} />
-            </>
-          }
+          path="/login"
+          element={<LoginPage />}
         />
-         <Route
+        <Route
+          path="/register"
+          element={<RegisterPage />}
+        />
+        <Route
           path="/generate-playlist"
           element={<GeneratePlaylistPage />}
         />
@@ -65,6 +58,18 @@ createRoot(document.getElementById('root')!).render(
         <Route
           path="/spotify-success"
           element={<SpotifyTokenSuccess />}
+        />
+        <Route
+          path="/settings"
+          element={<SettingsPage />}
+          children={
+            <>
+              <Route index={true} element={<MainSettings />} />
+              <Route path="edit-profile" element={<EditProfileForm />} />
+              <Route path="password-reset" element={<PasswordResetForm />} />
+              <Route path="delete-profile" element={<DeleteProfileForm />} />
+            </>
+          }
         />
       </Routes>
     </BrowserRouter>

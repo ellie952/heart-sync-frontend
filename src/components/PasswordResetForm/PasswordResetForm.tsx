@@ -39,6 +39,9 @@ function PasswordResetForm() {
                     }
                 );
 
+                localStorage.removeItem("USERNAME");
+                localStorage.removeItem("TOKEN");
+
                 navigate("/login")
             } catch (error: unknown) {
                 setHasError(true);

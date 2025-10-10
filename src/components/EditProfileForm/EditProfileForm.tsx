@@ -1,15 +1,86 @@
-import { useState, type ChangeEvent, type FormEvent } from "react";
+import axios from "axios";
+import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
+import { useNavigate } from "react-router";
 
 function EditProfileForm() {
-    const [username, setUsername] = useState("");
+    const [prevUsername, setPrevUsername] = useState("");
+    const [newUsername, setNewUsername] = useState("");
+    const [hasError, setHasError] = useState(false);
 
-    function handleUsername(e: ChangeEvent<HTMLInputElement>) {
-        setUsername(e.target.value)
+    const USER_API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/users`;
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        async function getUserData() {
+            const token = localStorage.getItem("TOKEN");
+            if (!token) {
+                setHasError(true);
+                console.error("No token found.");
+                return;
+            }
+
+            try {
+                const response = await axios.get(`${USER_API_BASE_URL}/profile`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+
+                const { username } = response.data.data;
+                setPrevUsername(username);
+                setNewUsername(username);
+            } catch (error) {
+                setHasError(true);
+                console.error("Error fetching user data:", error);
+            }
+        }
+
+        getUserData()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    function handleNewUsername(e: ChangeEvent<HTMLInputElement>) {
+        setNewUsername(e.target.value);
     }
 
-    function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    async function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        console.log("Profile updated");
+        setHasError(false);
+
+        const token = localStorage.getItem("TOKEN");
+        if (!token) {
+            setHasError(true);
+            console.error("You must be logged in to delete your profile.");
+            return;
+        }
+
+        if (newUsername) {
+            try {
+                await axios.put(
+                    `${USER_API_BASE_URL}/username`,
+                    {
+                        oldUsername: prevUsername,
+                        newUsername: newUsername
+                    },
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
+
+                navigate("/settings");
+            } catch (error: unknown) {
+                setHasError(true);
+                if (axios.isAxiosError(error)) {
+                    console.error("Error registering user:", error.response?.data || error.message);
+                } else {
+                    console.error("Unexpected error:", error);
+                }
+            }
+        }
     }
 
     return (
@@ -17,11 +88,16 @@ function EditProfileForm() {
             <input
                 type="text"
                 placeholder="Username"
-                value={username}
-                onChange={handleUsername}
+                value={newUsername}
+                onChange={handleNewUsername}
                 required
             />
             <input type="submit" />
+            {hasError && (
+                <p>
+                    Password reset failed. Please try again.
+                </p>
+            )}
         </form>
     )
 }
