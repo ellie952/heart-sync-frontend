@@ -1,15 +1,18 @@
 import axios from "axios";
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import { useNavigate } from "react-router";
+import { useAuth } from "../../contexts/AuthContext";
+import type { JwtPayloadType } from "../../interfaces/JwtPayloadType";
+import { jwtDecode } from "jwt-decode";
 
 function LoginForm() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [hasError, setHasError] = useState(false);
 
-    const navigate = useNavigate();
+    const { login } = useAuth();
 
-    const USER_API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/users`;
+    const navigate = useNavigate();
 
     function handleUsername(e: ChangeEvent<HTMLInputElement>) {
         setUsername(e.target.value);
@@ -24,25 +27,20 @@ function LoginForm() {
         setHasError(false);
 
         try {
-            const response = await axios.post(`${USER_API_BASE_URL}/login`, {
-                username,
-                password
-            }, {
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            })
+            const newToken = await login(username, password);
 
-            const token = response.data.token;
-
-            localStorage.setItem("TOKEN", token);
-            localStorage.setItem("USERNAME", username);
-
-            navigate("/");
+            if (newToken) {
+                const decodedToken = jwtDecode<JwtPayloadType>(newToken);
+                const userId = decodedToken.id;
+                navigate(`/dashboard/${userId}`);
+            } else {
+                setHasError(true);
+                console.error("Login failed: No token received.");
+            }
         } catch (error: unknown) {
             setHasError(true);
             if (axios.isAxiosError(error)) {
-                console.error("Error registering user:", error.response?.data || error.message);
+                console.error("Error logging in user:", error.response?.data || error.message);
             } else {
                 console.error("Unexpected error:", error);
             }
