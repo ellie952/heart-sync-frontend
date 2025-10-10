@@ -8,6 +8,7 @@ import { useParams } from "react-router";
 
 function ProfilePage() {
     const [user, setUser] = useState<UserType | null>(null);
+    const [isFollowing, setIsFollowing] = useState(false);
     const [userPosts, setUserPosts] = useState<PostType[]>([]);
     const [hasError, setHasError] = useState(false);
 
@@ -69,7 +70,16 @@ function ProfilePage() {
 
         getUserProfile();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId])
+    }, [userId, isFollowing])
+
+    async function handleCopyProfileLink() {
+        if (!userId) {
+            setHasError(true);
+            return;
+        };
+
+        await navigator.clipboard.writeText(`http://localhost:5173/profile/${encodeURIComponent(userId)}`)
+    }
 
     async function handleFollow() {
         if (!user) return;
@@ -85,6 +95,8 @@ function ProfilePage() {
                     },
                 }
             );
+
+            setIsFollowing(true);
         } catch (error: unknown) {
             setHasError(true);
             if (axios.isAxiosError(error)) {
@@ -101,8 +113,15 @@ function ProfilePage() {
                 <>
                     <h1>{user.username}</h1>
                     <p>Email: {user.email}</p>
-                    {username !== user.username && (
-                        <button onClick={handleFollow}>Follow</button>
+
+                    {username !== user.username ? (
+                        <button onClick={handleFollow}>
+                            Follow
+                        </button>
+                    ) : (
+                        <button onClick={handleCopyProfileLink}>
+                            Copy Profile Link
+                        </button>
                     )}
                     {userPosts.length !== 0 ? (
                         userPosts.map((post) => (
