@@ -22,7 +22,7 @@ function NavBar() {
                 <a className="navbar-brand" href="/">HeartSync</a>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                        {userId !== null && (
+                        {userId !== null ? (
                             <>
                                 <li className="nav-item">
                                     <a className="nav-link" href={`/dashboard/${encodeURIComponent(userId)}`}>
@@ -34,20 +34,6 @@ function NavBar() {
                                         Profile
                                     </a>
                                 </li>
-                            </>
-                        )}
-                        <li className="nav-item">
-                            <a className="nav-link" href="/login">
-                                Login
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="/register">
-                                Register
-                            </a>
-                        </li>
-                        {userId !== null && (
-                            <>
                                 <li className="nav-item">
                                     <a className="nav-link" href="/generate-playlist">
                                         Generate Playlist
@@ -66,6 +52,19 @@ function NavBar() {
                                 <li className="nav-item">
                                     <a className="nav-link" href="/settings">
                                         Settings
+                                    </a>
+                                </li>
+                            </>
+                        ) : (
+                            <>
+                                <li className="nav-item">
+                                    <a className="nav-link" href="/login">
+                                        Login
+                                    </a>
+                                </li>
+                                <li className="nav-item">
+                                    <a className="nav-link" href="/register">
+                                        Register
                                     </a>
                                 </li>
                             </>
