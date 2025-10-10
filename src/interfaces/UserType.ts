@@ -1,5 +1,6 @@
 export interface UserType {
-    id: string,
+    PK: string,
+    SK: string,
     username: string,
     password: string, 
     email: string

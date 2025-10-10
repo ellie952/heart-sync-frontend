@@ -25,12 +25,12 @@ function NavBar() {
                         {userId !== null && (
                             <>
                                 <li className="nav-item">
-                                    <a className="nav-link" href={`/dashboard/${userId}`}>
+                                    <a className="nav-link" href={`/dashboard/${encodeURIComponent(userId)}`}>
                                         Dashboard
                                     </a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href={`/profile/${userId}`}>
+                                    <a className="nav-link" href={`/profile/${encodeURIComponent(userId)}`}>
                                         Profile
                                     </a>
                                 </li>
