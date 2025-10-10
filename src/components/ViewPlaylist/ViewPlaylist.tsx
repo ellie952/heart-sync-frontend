@@ -116,7 +116,7 @@ function ViewPlaylist({ playlistId }: ViewPlaylistProps) {
             {!isLoading && !hasError && playlistData && (
                 <div>
                     <h2>Playlist Data</h2>
-                    <a href={spotifyPlaylistURL}>Spotify Playlist Link</a>
+                    <a href={spotifyPlaylistURL}>Listen on Spotify</a>
                     <pre>
                         {JSON.stringify(playlistData, null, 2)}
                     </pre>
