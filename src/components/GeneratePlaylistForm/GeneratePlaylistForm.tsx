@@ -46,6 +46,13 @@ function GeneratePlaylistForm(){
             return;
         }
 
+        if (!playlistName) {
+            console.log(playlistName)
+            console.log("Playlist name is empty.")
+            setHasError(true);
+            return;
+        }
+
         if (!genre && !artist) {
             console.log("Must include a genre or an artist. Cannot leave fields empty.")
             setHasError(true);
@@ -84,7 +91,6 @@ function GeneratePlaylistForm(){
             });
 
             console.log("Playlist:", populatedPlaylist.data);
-            
             // 
             
         } catch (error) {
