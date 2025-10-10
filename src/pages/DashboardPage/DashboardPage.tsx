@@ -11,7 +11,7 @@ function DashboardPage() {
     return (
         <div>
             <h1>Dashboard</h1>
-            <PostList userId={userId} />
+            <PostList userId={encodeURIComponent(userId)} />
         </div>
     )
 }

@@ -25,9 +25,8 @@ function PostList({ userId }: { userId: string }) {
 
                 feed.push(...response.data.data || null);
 
-                response = await axios.get(`${POST_API_BASE_URL}/post-history`, {
-                    headers: { Authorization: `Bearer ${token}` },
-                    params: { userId },
+                response = await axios.get(`${POST_API_BASE_URL}/post-history?userID=${userId}`, {
+                    headers: { Authorization: `Bearer ${token}` }
                 });
 
                 feed.push(...response.data.data || null);
@@ -51,11 +50,14 @@ function PostList({ userId }: { userId: string }) {
         <div>
             {!hasError || postList.length === 0 ? postList.map((post: PostType) => (
                 <Post
-                    key={post.id}
-                    id={post.id}
-                    title={post.title}
-                    activity={post.activity}
-                    description={post.description}
+                    key={post.SK}
+                    PK={post.PK}
+                    SK={post.SK}
+                    pst_caption={post.pst_caption}
+                    pst_activityType={post.pst_activityType}
+                    pst_media={post.pst_media}
+                    pst_timestamp={post.pst_timestamp}
+                    playlist_spotifyURI={post.playlist_spotifyURI}
                 />
             )) : (
                 <p>No posts found!</p>

@@ -1,39 +1,58 @@
-import { useState, type ChangeEvent, type FormEvent } from "react";
+import { useEffect, useState } from "react";
 import type { PostType } from "../../interfaces/PostType";
+import axios from "axios";
 
-function Post({ id, title, activity, description }: PostType) {
-    const [post, setPost] = useState({
-        id: id,
-        title: title,
-        activity: activity,
-        description: description
+function Post({ PK, SK, pst_caption = "None", pst_media = "Empty", pst_activityType, playlist_spotifyURI, pst_timestamp }: PostType) {
+    const [post] = useState({
+        PK: PK,
+        SK: SK,
+        pst_caption: pst_caption,
+        pst_media: pst_media,
+        pst_activityType: pst_activityType,
+        playlist_spotifyURI: playlist_spotifyURI,
+        pst_timestamp: pst_timestamp
     });
-    const [isEditing, setIsEditing] = useState(false);
+    const [postAuthor, setPostAuthor] = useState<string>("");
+    // const [isEditing, setIsEditing] = useState(false);
 
-    function handleTitle(e: ChangeEvent<HTMLInputElement>) {
-        setPost({ ...post, title: e.target.value });
-    }
+    const USER_API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/users`;
 
-    function handleActivity(e: ChangeEvent<HTMLInputElement>) {
-        setPost({ ...post, activity: e.target.value });
-    }
+    useEffect(() => {
+        async function getPostAuthor() {
+            const response = await axios.get(`${USER_API_BASE_URL}/profile/${encodeURIComponent(PK)}`);
 
-    function handleDescription(e: ChangeEvent<HTMLInputElement>) {
-        setPost({ ...post, description: e.target.value });
-    }
+            const fetchedUser = response.data.data;
+            setPostAuthor(fetchedUser.username);
+        }
 
-    function handleEditButton() {
-        setIsEditing(true);
-    }
+        getPostAuthor();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [PK]);
 
-    function handleSubmit(e: FormEvent<HTMLFormElement>) {
-        e.preventDefault();
-        setIsEditing(false);
-    }
+    // function handleTitle(e: ChangeEvent<HTMLInputElement>) {
+    //     setPost({ ...post, title: e.target.value });
+    // }
+
+    // function handleActivity(e: ChangeEvent<HTMLInputElement>) {
+    //     setPost({ ...post, activity: e.target.value });
+    // }
+
+    // function handleDescription(e: ChangeEvent<HTMLInputElement>) {
+    //     setPost({ ...post, description: e.target.value });
+    // }
+
+    // function handleEditButton() {
+    //     setIsEditing(true);
+    // }
+
+    // function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    //     e.preventDefault();
+    //     setIsEditing(false);
+    // }
 
     return (
         <div>
-            {isEditing ? (
+            {/* {isEditing ? (
                 <form onSubmit={handleSubmit}>
                     <input
                         type="text"
@@ -56,18 +75,27 @@ function Post({ id, title, activity, description }: PostType) {
                     <input type="submit" />
                 </form>
             ) : (
-                <>
-                    <h3>
-                        {title}: <span>{activity}</span>
-                    </h3>
-                    <p>
-                        {description}
-                    </p>
-                    <button onClick={handleEditButton}>
-                        Edit
-                    </button>
-                </>
-            )}
+                <> */}
+            <h3>
+                {post.pst_activityType}
+            </h3>
+            <p>
+                By: {postAuthor}
+            </p>
+            <p>
+                Caption: {post.pst_caption}
+            </p>
+            <a href={post.playlist_spotifyURI}>
+                Playlist link
+            </a>
+            <p>
+                {new Date(post.pst_timestamp).toString()}
+            </p>
+            {/* <button onClick={handleEditButton}>
+                Edit
+            </button>
+            </>
+            )} */}
         </div>
     )
 }

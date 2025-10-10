@@ -32,7 +32,7 @@ function LoginForm() {
             if (newToken) {
                 const decodedToken = jwtDecode<JwtPayloadType>(newToken);
                 const userId = decodedToken.id;
-                navigate(`/dashboard/${userId}`);
+                navigate(`/dashboard/${encodeURIComponent(userId)}`);
             } else {
                 setHasError(true);
                 console.error("Login failed: No token received.");
