@@ -1,14 +1,18 @@
 // Generate Playlist 
-// TODO: Running into problem with populating playlist 
+
 import axios from "axios";
 import { useState, type ChangeEvent, type FormEvent } from "react"
 import { useNavigate, useSearchParams } from "react-router";
+import ViewPlaylist from "../ViewPlaylist/ViewPlaylist";
 
 function GeneratePlaylistForm(){
     const [artist, setArtist] = useState("");
     const [genre, setGenre] = useState("");
     const [playlistName, setPlaylistName] = useState("");
     const [hasError, setHasError] = useState(false);
+    const [complete, setComplete] = useState(false);
+    const [playlistId, setPlaylistId] = useState("");
+    const [isGenerating, setIsGenerating] = useState(true);
 
     const navigate = useNavigate();
 
@@ -75,6 +79,7 @@ function GeneratePlaylistForm(){
             });
 
             console.log("Empty playlist created:", emptyPlaylist.data);
+            setPlaylistId(emptyPlaylist.data.playlistId);
 
             // populate playlist call
             const populatedPlaylist = await axios.post(`${USER_API_BASE_URL}/`, {}, 
@@ -91,6 +96,8 @@ function GeneratePlaylistForm(){
             });
 
             console.log("Playlist:", populatedPlaylist.data);
+            setComplete(true);
+            setIsGenerating(false);
             // 
             
         } catch (error) {
@@ -135,6 +142,24 @@ function GeneratePlaylistForm(){
                     Error: Please provide a playlist name, at least a genre or artist, and make sure you've connected to Spotify.
                 </p>
             )}
+            {/* {!hasError && !complete && isGenerating && (
+                <div>
+                    <p>
+                        Generating playlist ...
+                    </p>
+                </div>
+            )} */}
+            {!hasError && complete && !isGenerating && (
+                <div>
+                    <p style={{color:'green'}}>
+                        Successfully generated a playlist!
+                    </p>
+                    <div>
+                        <ViewPlaylist playlistId={playlistId} />
+                    </div>
+                </div>
+            )}
+
         </form>
     )
     
