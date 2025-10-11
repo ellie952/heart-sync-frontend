@@ -47,6 +47,9 @@ export default function AuthProvider({ children }: AuthProviderProps) {
         localStorage.removeItem("USERNAME");
         localStorage.removeItem("TOKEN");
 
+        localStorage.removeItem("SPOTIFY-TOKEN");
+        localStorage.removeItem("SPOTIFY-USER-ID");
+
         setUsername(null);
         setToken(null);
     }
