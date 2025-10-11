@@ -7,27 +7,22 @@ import type { JwtPayloadType } from "../../interfaces/JwtPayloadType";
 
 function NewPostForm() {
     const { token } = useAuth();
-   
-    const [title, setTitle] = useState("");
+
     const [pst_activityType, setActivityType] = useState("");
     const [playlist_spotifyURI, setSpotifyURI] = useState("");
-    const [description, setDescription] = useState("");
-    
+    const [pst_caption, setCaption] = useState("");
+
     const [hasError, setHasError] = useState(false);
 
     const navigate = useNavigate();
-    const USER_API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}`; 
-
-    function handleNewTitle(e: ChangeEvent<HTMLInputElement>) {
-        setTitle(e.target.value);
-    }
+    const USER_API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}`;
 
     function handleNewActivity(e: ChangeEvent<HTMLInputElement>) {
         setActivityType(e.target.value);
     }
 
-    function handleNewDescription(e: ChangeEvent<HTMLInputElement>) {
-        setDescription(e.target.value);
+    function handleNewCaption(e: ChangeEvent<HTMLInputElement>) {
+        setCaption(e.target.value);
     }
 
     function handleNewPlaylistURL(e: ChangeEvent<HTMLInputElement>) {
@@ -46,17 +41,17 @@ function NewPostForm() {
         const userId = decodedToken.id;
 
         try {
-        
+
             await axios.post(`${USER_API_BASE_URL}/posts`, {
-                title, description, pst_activityType, playlist_spotifyURI
-                }, {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${token}`
-                    }
-                })
-            navigate(`/dashboard/${userId}`)
-            
+                pst_caption, pst_activityType, playlist_spotifyURI
+            }, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            navigate(`/dashboard/${encodeURIComponent(userId)}`)
+
         } catch (error: unknown) {
             setHasError(true);
             if (axios.isAxiosError(error)) {
@@ -65,18 +60,12 @@ function NewPostForm() {
                 console.error("Unexpected error:", error);
             }
         }
-       
-       
+
+
     }
 
     return (
         <form onSubmit={handleSubmit}>
-            <input
-                type="text"
-                placeholder="Title"
-                value={title}
-                onChange={handleNewTitle}
-            />
             <input
                 required
                 type="text"
@@ -86,15 +75,15 @@ function NewPostForm() {
             />
             <input
                 type="text"
-                placeholder="Description"
-                value={description}
-                onChange={handleNewDescription}
+                placeholder="Caption"
+                value={pst_caption}
+                onChange={handleNewCaption}
             />
             <input
                 required
                 type="url"
                 placeholder="Spotify Playlist URL"
-                value = {playlist_spotifyURI}
+                value={playlist_spotifyURI}
                 onChange={handleNewPlaylistURL}
             />
             <input type="submit" />
