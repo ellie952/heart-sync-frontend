@@ -13,7 +13,6 @@ function Post({ PK, SK, pst_caption = "None", pst_media = "Empty", pst_activityT
         pst_timestamp: pst_timestamp
     });
     const [postAuthor, setPostAuthor] = useState<string>("");
-    // const [isEditing, setIsEditing] = useState(false);
 
     const USER_API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/users`;
 
@@ -29,53 +28,8 @@ function Post({ PK, SK, pst_caption = "None", pst_media = "Empty", pst_activityT
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [PK]);
 
-    // function handleTitle(e: ChangeEvent<HTMLInputElement>) {
-    //     setPost({ ...post, title: e.target.value });
-    // }
-
-    // function handleActivity(e: ChangeEvent<HTMLInputElement>) {
-    //     setPost({ ...post, activity: e.target.value });
-    // }
-
-    // function handleDescription(e: ChangeEvent<HTMLInputElement>) {
-    //     setPost({ ...post, description: e.target.value });
-    // }
-
-    // function handleEditButton() {
-    //     setIsEditing(true);
-    // }
-
-    // function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    //     e.preventDefault();
-    //     setIsEditing(false);
-    // }
-
     return (
         <div>
-            {/* {isEditing ? (
-                <form onSubmit={handleSubmit}>
-                    <input
-                        type="text"
-                        placeholder="Title"
-                        value={post.title}
-                        onChange={handleTitle}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Activity"
-                        value={post.activity}
-                        onChange={handleActivity}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Description"
-                        value={post.description}
-                        onChange={handleDescription}
-                    />
-                    <input type="submit" />
-                </form>
-            ) : (
-                <> */}
             <h3>
                 {post.pst_activityType}
             </h3>
@@ -91,11 +45,6 @@ function Post({ PK, SK, pst_caption = "None", pst_media = "Empty", pst_activityT
             <p>
                 {new Date(post.pst_timestamp).toString()}
             </p>
-            {/* <button onClick={handleEditButton}>
-                Edit
-            </button>
-            </>
-            )} */}
         </div>
     )
 }
