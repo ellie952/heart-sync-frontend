@@ -28,11 +28,17 @@ describe("MainSettings component", () => {
         const deleteProfileButton = screen.getByRole("link", { name: "Delete Profile" });
         const logOutButton = screen.getByRole("button", { name: "Log out" });
 
+        const redirectMessage = screen.queryByRole("paragraph");
+        const redirectLink = screen.queryByRole("link", { name: "log in" });
+
         // Assert
         expect(editProfileButton).toBeInTheDocument();
         expect(resetPasswordButton).toBeInTheDocument();
         expect(deleteProfileButton).toBeInTheDocument();
         expect(logOutButton).toBeInTheDocument();
+
+        expect(redirectMessage).not.toBeInTheDocument();
+        expect(redirectLink).not.toBeInTheDocument();
     });
 
     test("Does not render Edit Profile, Reset Password, Delete Profile, Log Out buttons when not logged in", () => {
@@ -51,10 +57,16 @@ describe("MainSettings component", () => {
         const deleteProfileButton = screen.queryByRole("link", { name: "Delete Profile" });
         const logOutButton = screen.queryByRole("button", { name: "Log out" });
 
+        const redirectMessage = screen.getByRole("paragraph");
+        const redirectLink = screen.getByRole("link", { name: "log in" });
+
         // Assert
         expect(editProfileButton).not.toBeInTheDocument();
         expect(resetPasswordButton).not.toBeInTheDocument();
         expect(deleteProfileButton).not.toBeInTheDocument();
         expect(logOutButton).not.toBeInTheDocument();
+
+        expect(redirectMessage).toBeInTheDocument();
+        expect(redirectLink).toBeInTheDocument();
     });
 });
