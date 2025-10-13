@@ -1,8 +1,8 @@
 function LandingPage() {
     return (
         <div>
-            <h1>HeartSync</h1>
-            <p>A playlist-building platform with a physical-activity focus.</p>
+            <h1 data-test="title">HeartSync</h1>
+            <p data-test="description">A playlist-building platform with a physical-activity focus.</p>
         </div>
     )
 }
