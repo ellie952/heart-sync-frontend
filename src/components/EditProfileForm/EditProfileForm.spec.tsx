@@ -16,7 +16,7 @@ describe("EditProfileForm component", () => {
         );
 
         // Act
-        const editProfileForm = screen.getByRole("form");
+        const editProfileForm = screen.getByRole("form", { name: "Edit Profile" });
 
         // Assert
         expect(editProfileForm).toBeInTheDocument();

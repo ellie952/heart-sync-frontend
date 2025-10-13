@@ -85,7 +85,10 @@ function EditProfileForm() {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form
+            aria-label="Edit Profile"
+            onSubmit={handleSubmit}
+        >
             <input
                 type="text"
                 placeholder="Username"
