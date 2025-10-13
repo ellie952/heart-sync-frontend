@@ -1,11 +1,14 @@
 import axios from "axios";
 import { useState, type ChangeEvent, type FormEvent } from "react"
 import { useNavigate } from "react-router";
+import { useAuth } from "../../contexts/AuthContext";
 
 function DeleteProfileForm() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [hasError, setHasError] = useState(false);
+
+    const { logout } = useAuth();
 
     const navigate = useNavigate();
 
@@ -45,6 +48,7 @@ function DeleteProfileForm() {
                 data: { password }
             });
 
+            logout()
             navigate("/login");
         } catch (error: unknown) {
             setHasError(true);

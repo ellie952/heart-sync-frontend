@@ -1,13 +1,14 @@
 import axios from "axios";
 import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import { useNavigate } from "react-router";
+import { ENVIRONMENT } from "../../constants";
 
 function EditProfileForm() {
     const [prevUsername, setPrevUsername] = useState("");
     const [newUsername, setNewUsername] = useState("");
     const [hasError, setHasError] = useState(false);
 
-    const USER_API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/users`;
+    const USER_API_BASE_URL = `${ENVIRONMENT.VITE_API_BASE_URL}/users`;
 
     const navigate = useNavigate();
 
@@ -32,7 +33,7 @@ function EditProfileForm() {
                 setNewUsername(username);
             } catch (error) {
                 setHasError(true);
-                console.error("Error fetching user data:", error);
+                console.error("Error editing user data:", error);
             }
         }
 
@@ -51,7 +52,7 @@ function EditProfileForm() {
         const token = localStorage.getItem("TOKEN");
         if (!token) {
             setHasError(true);
-            console.error("You must be logged in to delete your profile.");
+            console.error("You must be logged in to edit your profile.");
             return;
         }
 
@@ -75,7 +76,7 @@ function EditProfileForm() {
             } catch (error: unknown) {
                 setHasError(true);
                 if (axios.isAxiosError(error)) {
-                    console.error("Error registering user:", error.response?.data || error.message);
+                    console.error("Error updating user:", error.response?.data || error.message);
                 } else {
                     console.error("Unexpected error:", error);
                 }
@@ -95,7 +96,7 @@ function EditProfileForm() {
             <input type="submit" />
             {hasError && (
                 <p>
-                    Password reset failed. Please try again.
+                    Username reset failed. Please try again.
                 </p>
             )}
         </form>
