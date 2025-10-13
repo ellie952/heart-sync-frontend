@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, type ChangeEvent, type FormEvent } from "react"
 import { useNavigate } from "react-router";
 import { useAuth } from "../../contexts/AuthContext";
+import { ENVIRONMENT } from "../../constants";
 
 function DeleteProfileForm() {
     const [username, setUsername] = useState("");
@@ -12,7 +13,7 @@ function DeleteProfileForm() {
 
     const navigate = useNavigate();
 
-    const USER_API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/users`;
+    const USER_API_BASE_URL = `${ENVIRONMENT.VITE_API_BASE_URL}/users`;
 
     function handleUsername(e: ChangeEvent<HTMLInputElement>) {
         setUsername(e.target.value);
@@ -61,7 +62,10 @@ function DeleteProfileForm() {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form
+            aria-label="Delete Profile"
+            onSubmit={handleSubmit}
+        >
             <input
                 type="text"
                 placeholder="Confirm username"
