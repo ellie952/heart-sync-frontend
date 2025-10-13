@@ -11,7 +11,7 @@ function ProfilePage() {
     const [isFollowing, setIsFollowing] = useState(false);
     const [userPosts, setUserPosts] = useState<PostType[]>([]);
     const [hasError, setHasError] = useState(false);
-    const [profilPicURL, setProfilePicURL] = useState("");
+    const [profilePicURL, setProfilePicURL] = useState("");
 
     const { token, username } = useAuth();
 
@@ -36,8 +36,8 @@ function ProfilePage() {
                     }
                 });
 
-                const profilePicUrl = response.data;
-                setProfilePicURL(profilPicURL);
+                const picURL = response.data.data;
+                setProfilePicURL(picURL);
                 
             } catch (error: unknown) {
                 setHasError(true);
@@ -134,13 +134,12 @@ function ProfilePage() {
                     <h1>{user.username}</h1>
                     <p>Email: {user.email}</p>
 
-                      {profilPicURL ? (
-                        <img 
-                            src={profilPicURL} 
+                      {profilePicURL ? (
+                        <img width={"200px"} height={"200px"}
+                            src={profilePicURL} 
                             // alt={`${user.username}'s profile picture`}
                             onError={() => {
                                 console.error('Error loading profile picture');
-                                setProfilePicURL(null);
                             }}
                         />
                     ) : (
@@ -148,7 +147,7 @@ function ProfilePage() {
                             No Profile Image
                         </div>
                     )}
-                
+                    <br></br>
                     {username !== user.username ? (
                         <button onClick={handleFollow}>
                             Follow
