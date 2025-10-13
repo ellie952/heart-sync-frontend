@@ -11,6 +11,7 @@ function ProfilePage() {
     const [isFollowing, setIsFollowing] = useState(false);
     const [userPosts, setUserPosts] = useState<PostType[]>([]);
     const [hasError, setHasError] = useState(false);
+    const [profilPicURL, setProfilePicURL] = useState("");
 
     const { token, username } = useAuth();
 
@@ -27,6 +28,25 @@ function ProfilePage() {
                 setHasError(true);
                 return;
             };
+            // get user profile picture 
+            try{
+                const response = await axios.get(`${USER_API_BASE_URL}/${encodeURIComponent(userId)}/profile-pic`, {
+                    headers: { 
+                        'Authorization': `Bearer ${token}` 
+                    }
+                });
+
+                const profilePicUrl = response.data;
+                setProfilePicURL(profilPicURL);
+                
+            } catch (error: unknown) {
+                setHasError(true);
+                if (axios.isAxiosError(error)) {
+                    console.error("Error fetching user profile picture:", error.response?.data || error.message);
+                } else {
+                    console.error("Unexpected error:", error);
+                }
+            }
 
             try {
                 const response = await axios.get(`${USER_API_BASE_URL}/profile/${encodeURIComponent(userId)}`, {
@@ -114,6 +134,21 @@ function ProfilePage() {
                     <h1>{user.username}</h1>
                     <p>Email: {user.email}</p>
 
+                      {profilPicURL ? (
+                        <img 
+                            src={profilPicURL} 
+                            // alt={`${user.username}'s profile picture`}
+                            onError={() => {
+                                console.error('Error loading profile picture');
+                                setProfilePicURL(null);
+                            }}
+                        />
+                    ) : (
+                        <div>
+                            No Profile Image
+                        </div>
+                    )}
+                
                     {username !== user.username ? (
                         <button onClick={handleFollow}>
                             Follow
