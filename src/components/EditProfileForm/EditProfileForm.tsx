@@ -1,6 +1,9 @@
 import axios from "axios";
 import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import { useNavigate } from "react-router";
+import { useAuth } from "../../contexts/AuthContext";
+import { jwtDecode } from "jwt-decode";
+import PictureUpload from "../PictureUpload/PictureUpload";
 
 function EditProfileForm() {
     const [prevUsername, setPrevUsername] = useState("");
@@ -84,21 +87,27 @@ function EditProfileForm() {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input
-                type="text"
-                placeholder="Username"
-                value={newUsername}
-                onChange={handleNewUsername}
-                required
-            />
-            <input type="submit" />
-            {hasError && (
-                <p>
-                    Password reset failed. Please try again.
-                </p>
-            )}
-        </form>
+        <div>
+            <h5>Add a Profile Picture</h5>
+            <PictureUpload></PictureUpload>
+            <br></br>
+            <form onSubmit={handleSubmit}>
+                <h5>Change Username</h5>
+                <input
+                    type="text"
+                    placeholder="New Username"
+                    value={newUsername}
+                    onChange={handleNewUsername}
+                    required
+                />
+                <input type="submit" />
+                {hasError && (
+                    <p>
+                        Password reset failed. Please try again.
+                    </p>
+                )}
+            </form>
+        </div>
     )
 }
 
