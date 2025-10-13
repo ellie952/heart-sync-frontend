@@ -3,6 +3,8 @@ import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router";
 import { ENVIRONMENT } from "../../constants";
 import { useAuth } from "../../contexts/AuthContext";
+import { jwtDecode } from "jwt-decode";
+import PictureUpload from "../PictureUpload/PictureUpload";
 
 function EditProfileForm() {
     const [prevUsername, setPrevUsername] = useState("");
@@ -88,24 +90,30 @@ function EditProfileForm() {
     return (
         <>
             {token ? (
-                <form
-                    aria-label="Edit Profile"
-                    onSubmit={handleSubmit}
-                >
-                    <input
-                        type="text"
-                        placeholder="Username"
-                        value={newUsername}
-                        onChange={handleNewUsername}
-                        required
-                    />
-                    <input type="submit" />
-                    {hasError && (
-                        <p>
-                            Username reset failed. Please try again.
-                        </p>
-                    )}
-                </form>
+                 <div>
+                    <h5>Add a Profile Picture</h5>
+                    <PictureUpload></PictureUpload>
+                    <br></br>
+                    <form
+                        aria-label="Edit Profile"
+                        onSubmit={handleSubmit}
+                    >
+                        <h5>Change Username</h5>
+                        <input
+                            type="text"
+                            placeholder="Username"
+                            value={newUsername}
+                            onChange={handleNewUsername}
+                            required
+                        />
+                        <input type="submit" />
+                        {hasError && (
+                            <p>
+                                Username reset failed. Please try again.
+                            </p>
+                        )}
+                    </form>
+                  </div>
             ) : (
                 <p>
                     Please <Link to="/login">log in</Link> to access Settings.
