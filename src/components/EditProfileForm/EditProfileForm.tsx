@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { ENVIRONMENT } from "../../constants";
 import { useAuth } from "../../contexts/AuthContext";
 
@@ -51,7 +51,6 @@ function EditProfileForm() {
         e.preventDefault();
         setHasError(false);
 
-        const token = localStorage.getItem("TOKEN");
         if (!token) {
             setHasError(true);
             console.error("You must be logged in to edit your profile.");
@@ -87,24 +86,32 @@ function EditProfileForm() {
     }
 
     return (
-        <form
-            aria-label="Edit Profile"
-            onSubmit={handleSubmit}
-        >
-            <input
-                type="text"
-                placeholder="Username"
-                value={newUsername}
-                onChange={handleNewUsername}
-                required
-            />
-            <input type="submit" />
-            {hasError && (
+        <>
+            {token ? (
+                <form
+                    aria-label="Edit Profile"
+                    onSubmit={handleSubmit}
+                >
+                    <input
+                        type="text"
+                        placeholder="Username"
+                        value={newUsername}
+                        onChange={handleNewUsername}
+                        required
+                    />
+                    <input type="submit" />
+                    {hasError && (
+                        <p>
+                            Username reset failed. Please try again.
+                        </p>
+                    )}
+                </form>
+            ) : (
                 <p>
-                    Username reset failed. Please try again.
+                    Please <Link to="/login">log in</Link> to access Settings.
                 </p>
             )}
-        </form>
+        </>
     )
 }
 

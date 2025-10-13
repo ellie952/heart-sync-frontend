@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, type ChangeEvent, type FormEvent } from "react";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useAuth } from "../../contexts/AuthContext";
 import { ENVIRONMENT } from "../../constants";
 
@@ -73,38 +73,46 @@ function PasswordResetForm() {
     }
 
     return (
-        <form
-            aria-label="Password Reset"
-            onSubmit={handleSubmit}
-        >
-            <input
-                type="password"
-                placeholder="Old password"
-                value={prevPassword}
-                onChange={handlePrevPassword}
-                required
-            />
-            <input
-                type="password"
-                placeholder="New password"
-                value={newPassword}
-                onChange={handleNewPassword}
-                required
-            />
-            <input
-                type="password"
-                placeholder="Confirm new password"
-                value={confirmedPassword}
-                onChange={handleConfirmedPassword}
-                required
-            />
-            <input type="submit" />
-            {hasError && (
+        <>
+            {token ? (
+                <form
+                    aria-label="Password Reset"
+                    onSubmit={handleSubmit}
+                >
+                    <input
+                        type="password"
+                        placeholder="Old password"
+                        value={prevPassword}
+                        onChange={handlePrevPassword}
+                        required
+                    />
+                    <input
+                        type="password"
+                        placeholder="New password"
+                        value={newPassword}
+                        onChange={handleNewPassword}
+                        required
+                    />
+                    <input
+                        type="password"
+                        placeholder="Confirm new password"
+                        value={confirmedPassword}
+                        onChange={handleConfirmedPassword}
+                        required
+                    />
+                    <input type="submit" />
+                    {hasError && (
+                        <p>
+                            Password reset failed. Please try again.
+                        </p>
+                    )}
+                </form>
+            ) : (
                 <p>
-                    Password reset failed. Please try again.
+                    Please <Link to="/login">log in</Link> to access Settings.
                 </p>
             )}
-        </form>
+        </>
     )
 }
 

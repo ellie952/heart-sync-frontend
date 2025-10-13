@@ -12,6 +12,10 @@ jest.mock("../../contexts/AuthContext", () => ({
 }));
 
 describe("EditProfileForm component", () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+
     test("Renders EditProfileForm when logged in", () => {
         // Arrange
         (useAuth as jest.Mock).mockReturnValue({ token: "TOKEN" });
@@ -25,7 +29,36 @@ describe("EditProfileForm component", () => {
         // Act
         const editProfileForm = screen.getByRole("form", { name: "Edit Profile" });
 
+        const redirectMessage = screen.queryByRole("paragraph");
+        const redirectLink = screen.queryByRole("link", { name: "log in" });
+
         // Assert
         expect(editProfileForm).toBeInTheDocument();
-    })
+
+        expect(redirectMessage).not.toBeInTheDocument();
+        expect(redirectLink).not.toBeInTheDocument();
+    });
+
+    test("Does not render EditProfileForm when not logged in", () => {
+        // Arrange
+        (useAuth as jest.Mock).mockReturnValue({ token: null });
+
+        render(
+            <MemoryRouter>
+                <EditProfileForm />
+            </MemoryRouter>
+        );
+
+        // Act
+        const editProfileForm = screen.queryByRole("form", { name: "Edit Profile" });
+
+        const redirectMessage = screen.getByRole("paragraph");
+        const redirectLink = screen.getByRole("link", { name: "log in" });
+
+        // Assert
+        expect(editProfileForm).not.toBeInTheDocument();
+
+        expect(redirectMessage).toBeInTheDocument();
+        expect(redirectLink).toBeInTheDocument();
+    });
 });
