@@ -122,4 +122,4 @@ function EditProfileForm() {
     )
 }
 
-export default EditProfileForm;
+export default EditProfileForm
