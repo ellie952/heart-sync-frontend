@@ -37,10 +37,10 @@ function ProfilePage() {
                 });
 
                 const picURL = response.data.data;
+                console.log(picURL);
                 setProfilePicURL(picURL);
                 
             } catch (error: unknown) {
-                setHasError(true);
                 if (axios.isAxiosError(error)) {
                     console.error("Error fetching user profile picture:", error.response?.data || error.message);
                 } else {
