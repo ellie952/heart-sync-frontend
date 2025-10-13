@@ -1,15 +1,19 @@
 import axios from "axios";
 import { useState, type ChangeEvent, type FormEvent } from "react"
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { useAuth } from "../../contexts/AuthContext";
+import { ENVIRONMENT } from "../../constants";
 
 function DeleteProfileForm() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [hasError, setHasError] = useState(false);
 
+    const { token, logout } = useAuth();
+
     const navigate = useNavigate();
 
-    const USER_API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/users`;
+    const USER_API_BASE_URL = `${ENVIRONMENT.VITE_API_BASE_URL}/users`;
 
     function handleUsername(e: ChangeEvent<HTMLInputElement>) {
         setUsername(e.target.value);
@@ -29,7 +33,6 @@ function DeleteProfileForm() {
             return;
         }
 
-        const token = localStorage.getItem("TOKEN");
         if (!token) {
             setHasError(true);
             console.error("You must be logged in to delete your profile.");
@@ -45,6 +48,7 @@ function DeleteProfileForm() {
                 data: { password }
             });
 
+            logout()
             navigate("/login");
         } catch (error: unknown) {
             setHasError(true);
@@ -57,26 +61,38 @@ function DeleteProfileForm() {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input
-                type="text"
-                placeholder="Confirm username"
-                value={username}
-                onChange={handleUsername}
-            />
-            <input
-                type="password"
-                placeholder="Confirm password"
-                value={password}
-                onChange={handlePassword}
-            />
-            <input type="submit" value="Delete My Profile" />
-            {hasError && (
+        <>
+            {token ? (
+                <form
+                    aria-label="Delete Profile"
+                    onSubmit={handleSubmit}
+                >
+                    <input
+                        type="text"
+                        placeholder="Confirm username"
+                        value={username}
+                        onChange={handleUsername}
+                    />
+                    <input
+                        type="password"
+                        placeholder="Confirm password"
+                        value={password}
+                        onChange={handlePassword}
+                    />
+                    <input type="submit" value="Delete My Profile" />
+                    {hasError && (
+                        <p>
+                            Deletion failed. Please try again.
+                        </p>
+                    )}
+                </form>
+            ) : (
                 <p>
-                    Deletion failed. Please try again.
+                    Please <Link to="/login">log in</Link> to access Settings.
                 </p>
             )}
-        </form>
+        </>
+
     )
 }
 

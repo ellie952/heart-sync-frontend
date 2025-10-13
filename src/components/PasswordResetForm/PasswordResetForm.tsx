@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useState, type ChangeEvent, type FormEvent } from "react";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { useAuth } from "../../contexts/AuthContext";
+import { ENVIRONMENT } from "../../constants";
 
 function PasswordResetForm() {
     const [prevPassword, setPrevPassword] = useState("");
@@ -8,7 +10,9 @@ function PasswordResetForm() {
     const [confirmedPassword, setConfirmedPassword] = useState("");
     const [hasError, setHasError] = useState(false);
 
-    const USER_API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/users`;
+    const { token } = useAuth()
+
+    const USER_API_BASE_URL = `${ENVIRONMENT.VITE_API_BASE_URL}/users`;
 
     const navigate = useNavigate();
 
@@ -16,7 +20,6 @@ function PasswordResetForm() {
         e.preventDefault();
         setHasError(false);
 
-        const token = localStorage.getItem("TOKEN");
         if (!token) {
             setHasError(true);
             console.error("You must be logged in to delete your profile.");
@@ -70,35 +73,46 @@ function PasswordResetForm() {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input
-                type="password"
-                placeholder="Old password"
-                value={prevPassword}
-                onChange={handlePrevPassword}
-                required
-            />
-            <input
-                type="password"
-                placeholder="New password"
-                value={newPassword}
-                onChange={handleNewPassword}
-                required
-            />
-            <input
-                type="password"
-                placeholder="Confirm new password"
-                value={confirmedPassword}
-                onChange={handleConfirmedPassword}
-                required
-            />
-            <input type="submit" />
-            {hasError && (
+        <>
+            {token ? (
+                <form
+                    aria-label="Password Reset"
+                    onSubmit={handleSubmit}
+                >
+                    <input
+                        type="password"
+                        placeholder="Old password"
+                        value={prevPassword}
+                        onChange={handlePrevPassword}
+                        required
+                    />
+                    <input
+                        type="password"
+                        placeholder="New password"
+                        value={newPassword}
+                        onChange={handleNewPassword}
+                        required
+                    />
+                    <input
+                        type="password"
+                        placeholder="Confirm new password"
+                        value={confirmedPassword}
+                        onChange={handleConfirmedPassword}
+                        required
+                    />
+                    <input type="submit" />
+                    {hasError && (
+                        <p>
+                            Password reset failed. Please try again.
+                        </p>
+                    )}
+                </form>
+            ) : (
                 <p>
-                    Password reset failed. Please try again.
+                    Please <Link to="/login">log in</Link> to access Settings.
                 </p>
             )}
-        </form>
+        </>
     )
 }
 
