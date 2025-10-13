@@ -2,11 +2,14 @@ import axios from "axios";
 import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import { useNavigate } from "react-router";
 import { ENVIRONMENT } from "../../constants";
+import { useAuth } from "../../contexts/AuthContext";
 
 function EditProfileForm() {
     const [prevUsername, setPrevUsername] = useState("");
     const [newUsername, setNewUsername] = useState("");
     const [hasError, setHasError] = useState(false);
+
+    const { token } = useAuth();
 
     const USER_API_BASE_URL = `${ENVIRONMENT.VITE_API_BASE_URL}/users`;
 
@@ -14,7 +17,6 @@ function EditProfileForm() {
 
     useEffect(() => {
         async function getUserData() {
-            const token = localStorage.getItem("TOKEN");
             if (!token) {
                 setHasError(true);
                 console.error("No token found.");
