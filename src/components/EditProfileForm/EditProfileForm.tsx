@@ -3,7 +3,6 @@ import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router";
 import { ENVIRONMENT } from "../../constants";
 import { useAuth } from "../../contexts/AuthContext";
-import { jwtDecode } from "jwt-decode";
 import PictureUpload from "../PictureUpload/PictureUpload";
 
 function EditProfileForm() {
@@ -90,7 +89,7 @@ function EditProfileForm() {
     return (
         <>
             {token ? (
-                 <div>
+                <div>
                     <h5>Add a Profile Picture</h5>
                     <PictureUpload></PictureUpload>
                     <br></br>
@@ -113,7 +112,7 @@ function EditProfileForm() {
                             </p>
                         )}
                     </form>
-                  </div>
+                </div>
             ) : (
                 <p>
                     Please <Link to="/login">log in</Link> to access Settings.
