@@ -1,5 +1,5 @@
 describe('LandingPage tests', () => {
-  it('passes', () => {
+  it('Contains correct header and description', () => {
     cy.visit(Cypress.env("FRONTEND_BASE_URL"));
     cy.get("[data-test='title']").should(
       "contain.text", "HeartSync"

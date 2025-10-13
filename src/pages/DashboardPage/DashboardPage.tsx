@@ -10,7 +10,7 @@ function DashboardPage() {
 
     return (
         <div>
-            <h1>Dashboard</h1>
+            <h1 data-test="title">Dashboard</h1>
             <PostList userId={encodeURIComponent(userId)} />
         </div>
     )
