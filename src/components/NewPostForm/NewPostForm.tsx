@@ -5,6 +5,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { jwtDecode } from "jwt-decode";
 import type { JwtPayloadType } from "../../interfaces/JwtPayloadType";
 import { ENVIRONMENT } from "../../constants";
+import "../../../src/css/styles.css"
 
 function NewPostForm() {
     const { token } = useAuth();
@@ -67,31 +68,51 @@ function NewPostForm() {
 
     return (
         <>
+       
             {token ? (
                 <form
+                    className="post-form"
                     aria-label="New Post"
                     onSubmit={handleSubmit}
-                >
-                    <input
-                        required
-                        type="text"
-                        placeholder="Activity"
-                        value={pst_activityType}
-                        onChange={handleNewActivity}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Caption"
-                        value={pst_caption}
-                        onChange={handleNewCaption}
-                    />
-                    <input
-                        required
-                        type="url"
-                        placeholder="Spotify Playlist URL"
-                        value={playlist_spotifyURI}
-                        onChange={handleNewPlaylistURL}
-                    />
+                > 
+                    <div className="mb-3">
+                        <label htmlFor="activityInput" className="form-label">Activity</label>
+                        <input
+                            required
+                            type="text"
+                            className="form-control"
+                            id="activityInput"
+                            placeholder="What activity did you do?"
+                            value={pst_activityType}
+                            onChange={handleNewActivity}
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="spotifyLinkInput" className="form-label">Spotify Playlist URL</label>
+                        <input
+                            required
+                            type="url"
+                            className="form-control"
+                            id="spotifyLinkInput"
+                            placeholder="Paste Link Here"
+                            value={playlist_spotifyURI}
+                            onChange={handleNewPlaylistURL}
+                        />
+                    </div>
+                    <div className="mb-3">
+                        
+                        <label htmlFor="captionInput" className="form-label">Caption</label>
+                        <input
+                            required
+                            type="text"
+                            className="form-control"
+                            id="activityInput"
+                            placeholder="Add a caption..."
+                            value={pst_caption}
+                            onChange={handleNewCaption}
+                        />
+                    </div>
+                  
                     <input type="submit" />
                     {hasError && (
                         <p>

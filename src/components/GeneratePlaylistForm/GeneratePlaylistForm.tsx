@@ -14,7 +14,7 @@ function GeneratePlaylistForm() {
     const [hasError, setHasError] = useState(false);
     const [complete, setComplete] = useState(false);
     const [playlistId, setPlaylistId] = useState("");
-    const [isGenerating, setIsGenerating] = useState(true);
+    const [isGenerating, setIsGenerating] = useState(false);
 
     const { token } = useAuth();
 
@@ -84,6 +84,7 @@ function GeneratePlaylistForm() {
 
             console.log("Empty playlist created:", emptyPlaylist.data);
             setPlaylistId(emptyPlaylist.data.playlistId);
+            setIsGenerating(true);
 
             // populate playlist call
             const populatedPlaylist = await axios.post(`${USER_API_BASE_URL}/`, {},
@@ -102,7 +103,6 @@ function GeneratePlaylistForm() {
             console.log("Playlist:", populatedPlaylist.data);
             setComplete(true);
             setIsGenerating(false);
-            // 
 
         } catch (error) {
             setHasError(true);
@@ -118,47 +118,59 @@ function GeneratePlaylistForm() {
         <>
             {token ? (
                 <form
+                    style={{margin:"60px"}}
                     aria-label="Generate Playlist"
                     onSubmit={handleSubmit}
                 >
-                    <input
-                        title="Playlist Name"
-                        type="text"
-                        placeholder="Name your Playlist"
-                        value={playlistName}
-                        onChange={handlePlaylistName}
-                    />
-                    <br></br>
-                    <input
-                        title="Genre"
-                        type="text"
-                        placeholder="Genre"
-                        value={genre}
-                        onChange={handleGenre}
-                    />
-                    <br></br>
-                    <input
-                        title="Artist"
-                        type="text"
-                        placeholder="Artist"
-                        value={artist}
-                        onChange={handleArtist}
-                    />
-                    <br></br>
+                    <div className="form-floating mb-3">
+                        <input 
+                            type="text" 
+                            className="form-control" 
+                            id="floatingPlaylistName" 
+                            placeholder="Playlist Name"
+                            value={playlistName}
+                            onChange={handlePlaylistName}
+                        />
+                        <label htmlFor="floatingPlaylistName">Playlist Name</label>
+                    </div>
+                    <div className="form-floating mb-3">
+                        <input 
+                            type="text" 
+                            className="form-control" 
+                            id="floatingGenre" 
+                            placeholder="Genre"
+                            value={genre}
+                            onChange={handleGenre}
+                        />
+                        <label htmlFor="floatingGenre">Genre</label>
+                    </div>
+                     <div className="form-floating mb-3">
+                        <input 
+                            type="text" 
+                            className="form-control" 
+                            id="floatingArtist" 
+                            placeholder="Artist"
+                            value={artist}
+                            onChange={handleArtist}
+                        />
+                        <label htmlFor="floatingArtist">Artist</label>
+                    </div>
+            
                     <input type="submit" value="Generate Playlist" />
                     {hasError && (
-                        <p style={{ color: 'red' }}>
+                        <div className="alert alert-danger" role="alert">
                             Error: Please provide a playlist name, at least a genre or artist, and make sure you've connected to Spotify.
-                        </p>
+                        </div>
+                        // <p style={{ color: 'red' }}>
+                        //     Error: Please provide a playlist name, at least a genre or artist, and make sure you've connected to Spotify.
+                        // </p>
                     )}
-                    {/* {!hasError && !complete && isGenerating && (
-                <div>
-                    <p>
-                        Generating playlist ...
-                    </p>
-                </div>
-            )} */}
-                    {!hasError && complete && !isGenerating && (
+                    {!hasError && isGenerating && (
+                        <div style={{wordSpacing:"20px"}}className="spinner-border" role="status">
+                            <span className="visually-hidden" role="status">Generating Playlist...</span>
+                        </div>
+                    )}
+                    {!hasError && complete && (
                         <div>
                             <p style={{ color: 'green' }}>
                                 Successfully generated a playlist!

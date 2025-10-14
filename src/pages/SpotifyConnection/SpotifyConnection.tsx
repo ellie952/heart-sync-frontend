@@ -3,7 +3,6 @@ import SpotifyConnection from "../../components/SpotifyConnection/SpotifyConnect
 function SpotifyConnectionPage(){
     return (
          <div>
-            <h1>Connect to Spotify</h1>
             <SpotifyConnection></SpotifyConnection>
          </div>
     )
