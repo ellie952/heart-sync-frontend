@@ -13,6 +13,7 @@ function ProfilePage() {
     const [userPosts, setUserPosts] = useState<PostType[]>([]);
     const [hasError, setHasError] = useState(false);
     const [profilePicURL, setProfilePicURL] = useState("");
+    const [isLoading, setIsLoading] = useState(true);
 
     const { token, username } = useAuth();
 
@@ -24,9 +25,11 @@ function ProfilePage() {
     useEffect(() => {
         async function getUserProfile() {
             setHasError(false);
+            setIsLoading(true);
 
             if (!userId) {
                 setHasError(true);
+                setIsLoading(false);
                 return;
             };
             // get user profile picture 
@@ -87,6 +90,8 @@ function ProfilePage() {
                     console.error("Unexpected error:", error);
                 }
             }
+
+            setIsLoading(false);
         }
 
         getUserProfile();
@@ -154,7 +159,7 @@ function ProfilePage() {
                             Follow
                         </button>
                     ) : (
-                        <button onClick={handleCopyProfileLink} style={{marginTop:"20px"}}>
+                        <button onClick={handleCopyProfileLink} style={{margin:"20px"}}>
                             Copy Profile Link
                         </button>
                     )}
@@ -175,6 +180,10 @@ function ProfilePage() {
                         <p>No posts found!</p>
                     )}
                 </>
+            ) : isLoading ? (
+                 <div style={{wordSpacing:"20px"}}className="spinner-border" role="status">
+                            <span className="visually-hidden" role="status">Loading Profile...</span>
+                 </div>
             ) : (
                 <h1>User not found!</h1>
             )}
