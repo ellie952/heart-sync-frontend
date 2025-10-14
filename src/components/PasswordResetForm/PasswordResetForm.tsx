@@ -10,7 +10,7 @@ function PasswordResetForm() {
     const [confirmedPassword, setConfirmedPassword] = useState("");
     const [hasError, setHasError] = useState(false);
 
-    const { token } = useAuth()
+    const { token, logout } = useAuth();
 
     const USER_API_BASE_URL = `${ENVIRONMENT.VITE_API_BASE_URL}/users`;
 
@@ -42,10 +42,9 @@ function PasswordResetForm() {
                     }
                 );
 
-                localStorage.removeItem("USERNAME");
-                localStorage.removeItem("TOKEN");
 
-                navigate("/login")
+                logout();
+                navigate("/login");
             } catch (error: unknown) {
                 setHasError(true);
                 if (axios.isAxiosError(error)) {

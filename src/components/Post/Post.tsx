@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { PostType } from "../../interfaces/PostType";
 import axios from "axios";
+import { ENVIRONMENT } from "../../constants";
 
 function Post({ PK, SK, pst_caption = "None", pst_media = "Empty", pst_activityType, playlist_spotifyURI, pst_timestamp }: PostType) {
     const [post] = useState({
@@ -14,7 +15,7 @@ function Post({ PK, SK, pst_caption = "None", pst_media = "Empty", pst_activityT
     });
     const [postAuthor, setPostAuthor] = useState<string>("");
 
-    const USER_API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/users`;
+    const USER_API_BASE_URL = `${ENVIRONMENT.VITE_API_BASE_URL}/users`;
 
     useEffect(() => {
         async function getPostAuthor() {

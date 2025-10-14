@@ -3,6 +3,7 @@ import type { PostType } from "../../interfaces/PostType";
 import Post from "../Post/Post"
 import axios from "axios";
 import { useAuth } from "../../contexts/AuthContext";
+import { ENVIRONMENT } from "../../constants";
 
 function PostList({ userId }: { userId: string }) {
     const [postList, setPostList] = useState<PostType[]>([]);
@@ -10,7 +11,7 @@ function PostList({ userId }: { userId: string }) {
 
     const { token } = useAuth();
 
-    const POST_API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/posts`;
+    const POST_API_BASE_URL = `${ENVIRONMENT.VITE_API_BASE_URL}/posts`;
 
     useEffect(() => {
         async function getUserFeed() {
