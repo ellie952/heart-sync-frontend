@@ -1,9 +1,9 @@
 import GeneratePlaylistForm from "../../components/GeneratePlaylistForm/GeneratePlaylistForm";
 
-function GeneratePlaylistPage(){
+function GeneratePlaylistPage() {
     return (
         <div>
-            <h1>Generate a Playlist</h1>
+            <h1 data-test="title">Generate a Playlist</h1>
             <GeneratePlaylistForm></GeneratePlaylistForm>
         </div>
     )
