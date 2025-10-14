@@ -136,7 +136,7 @@ function ProfilePage() {
                     <p>Email: {user.email}</p>
 
                     {profilePicURL ? (
-                        <img width={"200px"} height={"200px"}
+                        <img width={"200px"} height={"200px"} style={{borderRadius:"50%"}}
                             src={profilePicURL}
                             // alt={`${user.username}'s profile picture`}
                             onError={() => {
@@ -154,7 +154,7 @@ function ProfilePage() {
                             Follow
                         </button>
                     ) : (
-                        <button onClick={handleCopyProfileLink}>
+                        <button onClick={handleCopyProfileLink} style={{marginTop:"20px"}}>
                             Copy Profile Link
                         </button>
                     )}
