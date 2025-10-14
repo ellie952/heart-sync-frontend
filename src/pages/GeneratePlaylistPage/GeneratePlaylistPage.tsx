@@ -3,7 +3,7 @@ import GeneratePlaylistForm from "../../components/GeneratePlaylistForm/Generate
 function GeneratePlaylistPage() {
     return (
         <div>
-            <h1 data-test="title">Generate a Playlist</h1>
+            <h3 style={{color:"#2521217b", margin:"20px"}}data-test="title">Generate a Playlist</h3>
             <GeneratePlaylistForm></GeneratePlaylistForm>
         </div>
     )
