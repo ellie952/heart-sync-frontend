@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import { useNavigate } from "react-router";
+import { ENVIRONMENT } from "../../constants";
+import { useAuth } from "../../contexts/AuthContext";
 
 function RegisterForm() {
     const [username, setUsername] = useState("");
@@ -9,7 +11,9 @@ function RegisterForm() {
     const [retypedPassword, setRetypedPassword] = useState("");
     const [hasError, setHasError] = useState(false)
 
-    const USER_API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/users`;
+    const { token } = useAuth();
+
+    const USER_API_BASE_URL = `${ENVIRONMENT.VITE_API_BASE_URL}/users`;
 
     const navigate = useNavigate();
 
@@ -62,38 +66,49 @@ function RegisterForm() {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input
-                type="text"
-                placeholder="Username"
-                value={username}
-                onChange={handleUsername}
-            />
-            <input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={handleEmail}
-            />
-            <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={handlePassword}
-            />
-            <input
-                type="password"
-                placeholder="Confirm password"
-                value={retypedPassword}
-                onChange={handleRetypedPassword}
-            />
-            <input type="submit" />
-            {hasError && (
+        <>
+            {!token ? (
+                <form
+                    onSubmit={handleSubmit}
+                    aria-label="Register"
+                >
+                    <input
+                        type="text"
+                        placeholder="Username"
+                        value={username}
+                        onChange={handleUsername}
+                    />
+                    <input
+                        type="email"
+                        placeholder="Email"
+                        value={email}
+                        onChange={handleEmail}
+                    />
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={handlePassword}
+                    />
+                    <input
+                        type="password"
+                        placeholder="Confirm password"
+                        value={retypedPassword}
+                        onChange={handleRetypedPassword}
+                    />
+                    <input type="submit" />
+                    {hasError && (
+                        <p>
+                            Registration failed: All fields must be valid.
+                        </p>
+                    )}
+                </form>
+            ) : (
                 <p>
-                    Registration failed: All fields must be valid.
+                    You are already logged in.
                 </p>
             )}
-        </form>
+        </>
     )
 }
 

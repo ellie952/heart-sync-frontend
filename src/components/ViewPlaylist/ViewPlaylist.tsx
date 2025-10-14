@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState, useEffect, type FormEvent } from "react";
 import { useNavigate } from "react-router";
+import { ENVIRONMENT } from "../../constants";
 
 
 interface ViewPlaylistProps {
@@ -8,36 +9,36 @@ interface ViewPlaylistProps {
 }
 
 function ViewPlaylist({ playlistId }: ViewPlaylistProps) {
-    const[isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
     const [hasError, setHasError] = useState(false);
     const [playlistData, setPlaylistData] = useState<any>(null);
     const [spotifyPlaylistURL, setSpotifyPlaylistURL] = useState("");
 
-    const USER_API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/playlist-builder`; 
-    
-    useEffect(()=>{
+    const USER_API_BASE_URL = `${ENVIRONMENT.VITE_API_BASE_URL}/playlist-builder`;
+
+    useEffect(() => {
 
         const token = localStorage.getItem("TOKEN");
 
-        if (!token){
+        if (!token) {
             console.log("no token");
             setHasError(true);
             setIsLoading(false);
             return;
         }
-        
-        if(!playlistId){
+
+        if (!playlistId) {
             console.log("no playlist id");
             setHasError(true);
             setIsLoading(false);
             return;
         }
 
-        const getPlaylistData = async() =>{
-             try{
+        const getPlaylistData = async () => {
+            try {
 
                 const response = await axios.get(`${USER_API_BASE_URL}/${playlistId}`, {
-                    headers:{
+                    headers: {
                         Authorization: `Bearer ${token}`
                     }
                 });
@@ -52,23 +53,23 @@ function ViewPlaylist({ playlistId }: ViewPlaylistProps) {
 
                 setPlaylistData(response.data);
 
-            } catch (error: unknown){
+            } catch (error: unknown) {
                 setHasError(true);
                 if (axios.isAxiosError(error)) {
                     console.error("Error getting playlist data :", error.response?.data || error.message);
                 } else {
                     console.error("Unexpected error:", error);
                 }
-            } finally{
+            } finally {
                 setIsLoading(false);
             }
         };
 
-        const getSpotifyPlaylistURL = async() => {
-            try{
+        const getSpotifyPlaylistURL = async () => {
+            try {
 
-                const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/spotify/playlists/${playlistId}`, {
-                    headers:{
+                const response = await axios.get(`${ENVIRONMENT.VITE_API_BASE_URL}/spotify/playlists/${playlistId}`, {
+                    headers: {
                         Authorization: `Bearer ${token}`
                     }
                 });
@@ -84,14 +85,14 @@ function ViewPlaylist({ playlistId }: ViewPlaylistProps) {
 
                 setSpotifyPlaylistURL(response.data.external_urls.spotify);
 
-            } catch (error: unknown){
+            } catch (error: unknown) {
                 setHasError(true);
                 if (axios.isAxiosError(error)) {
                     console.error("Error getting playlist data from Spotify:", error.response?.data || error.message);
                 } else {
                     console.error("Unexpected error:", error);
                 }
-            } finally{
+            } finally {
                 setIsLoading(false);
             }
 
@@ -105,13 +106,13 @@ function ViewPlaylist({ playlistId }: ViewPlaylistProps) {
     return (
         <div>
             {isLoading && <p>Loading playlist...</p>}
-            
+
             {hasError && (
-                <p style={{color: 'red'}}>
+                <p style={{ color: 'red' }}>
                     Error loading playlist. Please try again.
                 </p>
             )}
-            
+
             {!isLoading && !hasError && playlistData && (
                 <div>
                     <h2>Playlist Data</h2>
@@ -121,13 +122,13 @@ function ViewPlaylist({ playlistId }: ViewPlaylistProps) {
                     </pre>
                 </div>
             )}
-            
+
             {!isLoading && !hasError && !playlistData && (
                 <p>No playlist data available.</p>
             )}
         </div>
     )
-            
+
 
 }
 

@@ -5,6 +5,7 @@ import type { UserType } from "../../interfaces/UserType";
 import Post from "../../components/Post/Post";
 import type { PostType } from "../../interfaces/PostType";
 import { useParams } from "react-router";
+import { ENVIRONMENT } from "../../constants";
 
 function ProfilePage() {
     const [user, setUser] = useState<UserType | null>(null);
@@ -17,8 +18,8 @@ function ProfilePage() {
 
     const { userId } = useParams();
 
-    const USER_API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/users`;
-    const POST_API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/posts`;
+    const USER_API_BASE_URL = `${ENVIRONMENT.VITE_API_BASE_URL}/users`;
+    const POST_API_BASE_URL = `${ENVIRONMENT.VITE_API_BASE_URL}/posts`;
 
     useEffect(() => {
         async function getUserProfile() {
@@ -29,17 +30,17 @@ function ProfilePage() {
                 return;
             };
             // get user profile picture 
-            try{
+            try {
                 const response = await axios.get(`${USER_API_BASE_URL}/${encodeURIComponent(userId)}/profile-pic`, {
-                    headers: { 
-                        'Authorization': `Bearer ${token}` 
+                    headers: {
+                        'Authorization': `Bearer ${token}`
                     }
                 });
 
                 const picURL = response.data.data;
                 console.log(picURL);
                 setProfilePicURL(picURL);
-                
+
             } catch (error: unknown) {
                 if (axios.isAxiosError(error)) {
                     console.error("Error fetching user profile picture:", error.response?.data || error.message);
@@ -134,9 +135,9 @@ function ProfilePage() {
                     <h1>{user.username}</h1>
                     <p>Email: {user.email}</p>
 
-                      {profilePicURL ? (
+                    {profilePicURL ? (
                         <img width={"200px"} height={"200px"}
-                            src={profilePicURL} 
+                            src={profilePicURL}
                             // alt={`${user.username}'s profile picture`}
                             onError={() => {
                                 console.error('Error loading profile picture');

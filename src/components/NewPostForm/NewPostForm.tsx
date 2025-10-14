@@ -1,9 +1,10 @@
 import axios from "axios"
 import { useState, type ChangeEvent, type FormEvent } from "react"
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useAuth } from "../../contexts/AuthContext";
 import { jwtDecode } from "jwt-decode";
 import type { JwtPayloadType } from "../../interfaces/JwtPayloadType";
+import { ENVIRONMENT } from "../../constants";
 
 function NewPostForm() {
     const { token } = useAuth();
@@ -15,7 +16,7 @@ function NewPostForm() {
     const [hasError, setHasError] = useState(false);
 
     const navigate = useNavigate();
-    const USER_API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}`;
+    const USER_API_BASE_URL = `${ENVIRONMENT.VITE_API_BASE_URL}`;
 
     function handleNewActivity(e: ChangeEvent<HTMLInputElement>) {
         setActivityType(e.target.value);
@@ -65,34 +66,45 @@ function NewPostForm() {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input
-                required
-                type="text"
-                placeholder="Activity"
-                value={pst_activityType}
-                onChange={handleNewActivity}
-            />
-            <input
-                type="text"
-                placeholder="Caption"
-                value={pst_caption}
-                onChange={handleNewCaption}
-            />
-            <input
-                required
-                type="url"
-                placeholder="Spotify Playlist URL"
-                value={playlist_spotifyURI}
-                onChange={handleNewPlaylistURL}
-            />
-            <input type="submit" />
-            {hasError && (
+        <>
+            {token ? (
+                <form
+                    aria-label="New Post"
+                    onSubmit={handleSubmit}
+                >
+                    <input
+                        required
+                        type="text"
+                        placeholder="Activity"
+                        value={pst_activityType}
+                        onChange={handleNewActivity}
+                    />
+                    <input
+                        type="text"
+                        placeholder="Caption"
+                        value={pst_caption}
+                        onChange={handleNewCaption}
+                    />
+                    <input
+                        required
+                        type="url"
+                        placeholder="Spotify Playlist URL"
+                        value={playlist_spotifyURI}
+                        onChange={handleNewPlaylistURL}
+                    />
+                    <input type="submit" />
+                    {hasError && (
+                        <p>
+                            Failed to create post.
+                        </p>
+                    )}
+                </form>
+            ) : (
                 <p>
-                    Failed to create post.
+                    Please <Link to="/login">log in</Link> to make a new post.
                 </p>
             )}
-        </form>
+        </>
     )
 }
 

@@ -10,7 +10,7 @@ function LoginForm() {
     const [password, setPassword] = useState("");
     const [hasError, setHasError] = useState(false);
 
-    const { login } = useAuth();
+    const { token, login } = useAuth();
 
     const navigate = useNavigate();
 
@@ -48,26 +48,37 @@ function LoginForm() {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input
-                type="text"
-                placeholder="Username"
-                value={username}
-                onChange={handleUsername}
-            />
-            <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={handlePassword}
-            />
-            <input type="submit" />
-            {hasError && (
+        <>
+            {!token ? (
+                <form
+                    aria-label="Login"
+                    onSubmit={handleSubmit}
+                >
+                    <input
+                        type="text"
+                        placeholder="Username"
+                        value={username}
+                        onChange={handleUsername}
+                    />
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={handlePassword}
+                    />
+                    <input type="submit" />
+                    {hasError && (
+                        <p>
+                            Login failed: All fields must be valid.
+                        </p>
+                    )}
+                </form>
+            ) : (
                 <p>
-                    Login failed: All fields must be valid.
+                    You are already logged in.
                 </p>
             )}
-        </form>
+        </>
     )
 }
 

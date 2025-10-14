@@ -3,6 +3,7 @@ import { createContext, useContext, useState } from "react";
 import type { AuthContextType } from "../interfaces/AuthContextType";
 import type { AuthProviderProps } from "../interfaces/AuthProviderProps";
 import axios from "axios";
+import { ENVIRONMENT } from "../constants";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -10,7 +11,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     const [username, setUsername] = useState<string | null>(localStorage.getItem("USERNAME"));
     const [token, setToken] = useState<string | null>(localStorage.getItem("TOKEN"));
 
-    const USER_API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/users`;
+    const USER_API_BASE_URL = `${ENVIRONMENT.VITE_API_BASE_URL}/users`;
 
     async function login(username: string, password: string) {
         try {
