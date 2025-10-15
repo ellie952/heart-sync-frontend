@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { ENVIRONMENT } from "../../constants";
 import axios from "axios";
@@ -13,28 +13,28 @@ function SearchUsername() {
     const [searchParams] = useSearchParams();
 
     const query = searchParams.get("query") as string;
-    
+
     const USER_API_BASE_URL = `${ENVIRONMENT.VITE_API_BASE_URL}/users`;
 
-    useEffect(()=>{
+    useEffect(() => {
         if (!query.trim()) return;
 
         async function getProfileByUsername() {
-            try{
-                const response = await axios.get(`${USER_API_BASE_URL}/profile/username/${query}`,{
-                    headers:{
+            try {
+                const response = await axios.get(`${USER_API_BASE_URL}/profile/username/${query}`, {
+                    headers: {
                         "Content-Type": "application/json"
                     }
                 });
                 console.log(response.data);
                 const followId = response.data.data.PK;
 
-                if (followId){
+                if (followId) {
                     navigate(`/profile/${encodeURIComponent(followId)}`)
-                } else{
+                } else {
                     console.error("Unable to get user id", response.data);
                 }
-                
+
 
             } catch (error: unknown) {
                 //setHasError(true);
@@ -49,9 +49,9 @@ function SearchUsername() {
         getProfileByUsername();
 
     }, [query, navigate, USER_API_BASE_URL])
-    
-return null;
-   
+
+    return null;
+
 }
 
 export default SearchUsername;
