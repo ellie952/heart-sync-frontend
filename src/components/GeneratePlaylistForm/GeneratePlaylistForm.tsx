@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import { useState, type ChangeEvent, type FormEvent } from "react"
-import { Link, useNavigate, useSearchParams } from "react-router";
+import { Link } from "react-router";
 import ViewPlaylist from "../ViewPlaylist/ViewPlaylist";
 import { useAuth } from "../../contexts/AuthContext";
 import { ENVIRONMENT } from "../../constants";
@@ -17,8 +17,6 @@ function GeneratePlaylistForm() {
     const [isGenerating, setIsGenerating] = useState(false);
 
     const { token } = useAuth();
-
-    const navigate = useNavigate();
 
     const USER_API_BASE_URL = `${ENVIRONMENT.VITE_API_BASE_URL}/playlist-builder`;
 
@@ -118,15 +116,15 @@ function GeneratePlaylistForm() {
         <>
             {token ? (
                 <form
-                    style={{margin:"60px"}}
+                    style={{ margin: "60px" }}
                     aria-label="Generate Playlist"
                     onSubmit={handleSubmit}
                 >
                     <div className="form-floating mb-3">
-                        <input 
-                            type="text" 
-                            className="form-control" 
-                            id="floatingPlaylistName" 
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="floatingPlaylistName"
                             placeholder="Playlist Name"
                             value={playlistName}
                             onChange={handlePlaylistName}
@@ -134,28 +132,28 @@ function GeneratePlaylistForm() {
                         <label htmlFor="floatingPlaylistName">Playlist Name</label>
                     </div>
                     <div className="form-floating mb-3">
-                        <input 
-                            type="text" 
-                            className="form-control" 
-                            id="floatingGenre" 
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="floatingGenre"
                             placeholder="Genre"
                             value={genre}
                             onChange={handleGenre}
                         />
                         <label htmlFor="floatingGenre">Genre</label>
                     </div>
-                     <div className="form-floating mb-3">
-                        <input 
-                            type="text" 
-                            className="form-control" 
-                            id="floatingArtist" 
+                    <div className="form-floating mb-3">
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="floatingArtist"
                             placeholder="Artist"
                             value={artist}
                             onChange={handleArtist}
                         />
                         <label htmlFor="floatingArtist">Artist</label>
                     </div>
-            
+
                     <input type="submit" value="Generate Playlist" />
                     {hasError && (
                         <div className="alert alert-danger" role="alert">
@@ -163,7 +161,7 @@ function GeneratePlaylistForm() {
                         </div>
                     )}
                     {!hasError && isGenerating && (
-                        <div style={{wordSpacing:"20px"}}className="spinner-border" role="status">
+                        <div style={{ wordSpacing: "20px" }} className="spinner-border" role="status">
                             <span className="visually-hidden" role="status">Generating Playlist...</span>
                         </div>
                     )}
