@@ -2,11 +2,13 @@ import { jwtDecode } from "jwt-decode"
 import type { JwtPayloadType } from "../../interfaces/JwtPayloadType";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import { Link, useNavigate } from "react-router-dom";
 
 function NavBar() {
-    const { token } = useAuth();
+    const { token, username, logout } = useAuth();
     const [userId, setUserId] = useState<string | null>(null);
 
+    // const navigate = useNavigate();
     useEffect(() => {
         if (token) {
             const decodedToken = jwtDecode<JwtPayloadType>(token);
@@ -29,11 +31,11 @@ function NavBar() {
                                         Dashboard
                                     </a>
                                 </li>
-                                <li className="nav-item">
+                                {/* <li className="nav-item">
                                     <a className="nav-link" href={`/profile/${encodeURIComponent(userId)}`}>
                                         Profile
                                     </a>
-                                </li>
+                                </li> */}
                                 <li className="nav-item">
                                     <a className="nav-link" href="/generate-playlist">
                                         Generate Playlist
@@ -44,16 +46,34 @@ function NavBar() {
                                         New Post
                                     </a>
                                 </li>
+                              
                                 <li className="nav-item">
                                     <a className="nav-link" href="/spotify-connection">
                                         Spotify Connection
                                     </a>
+                                </li>  
+                                <li className="nav-item dropdown">
+                                    <button className="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">@{username}</button>
+                                    <ul className="dropdown-menu">
+                                    <li><a className="dropdown-item" href={`/profile/${encodeURIComponent(userId)}`}>My Profile</a></li>
+                                    <li><a className="dropdown-item" href="/settings/edit-profile">Edit Profile</a></li>
+                                    <li><a className="dropdown-item" href="/settings/password-reset">Reset Password</a></li>
+                                    <li><a className="dropdown-item" href="/settings/delete-profile">Delete Profile</a></li>
+                                    <li><hr className="dropdown-divider" /></li>
+                                    <li><a className="dropdown-item" href="/">
+                                        <button className="dropdown-item" onClick={() => {
+                                                logout();
+                                                 <Link to="/"></Link>
+                                            }}>Logout</button>
+                                        </a>
+                                    </li>
+                                    </ul>
                                 </li>
-                                <li className="nav-item">
+                                {/* <li className="nav-item">
                                     <a className="nav-link" href="/settings">
                                         Settings
                                     </a>
-                                </li>
+                                </li> */}
                             </>
                         ) : (
                             <>

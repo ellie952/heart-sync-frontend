@@ -3,5 +3,9 @@ import { TrackType } from "./TrackType";
 export interface PlaylistType{
     playlistName:string,
     description:string,
-    tracksInfo: TrackType[];
+    tracksInfo:  Array<{
+        Title: string;
+        Artist: string;
+        Album: string;
+    }>;
 }

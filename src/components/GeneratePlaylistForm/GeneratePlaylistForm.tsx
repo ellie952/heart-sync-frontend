@@ -161,9 +161,6 @@ function GeneratePlaylistForm() {
                         <div className="alert alert-danger" role="alert">
                             Error: Please provide a playlist name, at least a genre or artist, and make sure you've connected to Spotify.
                         </div>
-                        // <p style={{ color: 'red' }}>
-                        //     Error: Please provide a playlist name, at least a genre or artist, and make sure you've connected to Spotify.
-                        // </p>
                     )}
                     {!hasError && isGenerating && (
                         <div style={{wordSpacing:"20px"}}className="spinner-border" role="status">
