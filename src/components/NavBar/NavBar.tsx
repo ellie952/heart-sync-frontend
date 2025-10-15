@@ -25,7 +25,7 @@ function NavBar() {
     }, [token])
 
     return (
-        <nav className="navbar navbar-expand-lg bg-body-tertiary">
+        <nav className="navbar navbar-expand-lg fixed-top" style={{ backgroundColor: "rgba(236, 225, 225, 0.69)"}}>
             <div className="container-fluid">
                 <a className="navbar-brand" href="/">HeartSync</a>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
@@ -43,18 +43,18 @@ function NavBar() {
                                     </a>
                                 </li> */}
                                 <li className="nav-item">
-                                    <a className="nav-link" href="/generate-playlist">
+                                    <a className="nav-link " href="/generate-playlist">
                                         Generate Playlist
                                     </a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="/new-post">
+                                    <a className="nav-link " href="/new-post">
                                         New Post
                                     </a>
                                 </li>
                               
                                 <li className="nav-item">
-                                    <a className="nav-link" href="/spotify-connection">
+                                    <a className="nav-link " href="/spotify-connection">
                                         Spotify Connection
                                     </a>
                                 </li>  

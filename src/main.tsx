@@ -18,6 +18,8 @@ import SpotifyTokenSuccess from './components/SpotifyTokenSucess/SpotifyTokenSuc
 import LandingPage from './pages/LandingPage/LandingPage';
 import AuthProvider from './contexts/AuthContext';
 import SearchUsername from './components/SearchUsername/SearchUsername';
+import ViewPlaylist from './components/ViewPlaylist/ViewPlaylist';
+import ViewPlaylistPage from './pages/ViewPlaylistPage/ViewPlaylistPage';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -48,6 +50,10 @@ createRoot(document.getElementById('root')!).render(
           <Route
             path="/generate-playlist"
             element={<GeneratePlaylistPage />}
+          />
+          <Route
+            path="/view-playlist/:playlistId"
+            element={<ViewPlaylistPage />}
           />
           <Route
             path="/new-post"

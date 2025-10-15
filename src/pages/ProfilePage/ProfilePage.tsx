@@ -6,6 +6,7 @@ import Post from "../../components/Post/Post";
 import type { PostType } from "../../interfaces/PostType";
 import { useParams } from "react-router";
 import { ENVIRONMENT } from "../../constants";
+import "../../css/styles.css"
 
 function ProfilePage() {
     const [user, setUser] = useState<UserType | null>(null);
@@ -135,7 +136,7 @@ function ProfilePage() {
     }
 
     return (
-        <div>
+        <div className="page">
             {user !== null && !hasError ? (
                 <>
                     <h1>{user.username}</h1>

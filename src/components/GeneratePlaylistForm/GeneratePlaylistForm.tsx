@@ -118,7 +118,7 @@ function GeneratePlaylistForm() {
         <>
             {token ? (
                 <form
-                    style={{margin:"60px"}}
+                    style={{margin:"60px", width:"400px"}}
                     aria-label="Generate Playlist"
                     onSubmit={handleSubmit}
                 >
@@ -169,12 +169,13 @@ function GeneratePlaylistForm() {
                     )}
                     {!hasError && complete && (
                         <div>
-                            <p style={{ color: 'green' }}>
-                                Successfully generated a playlist!
-                            </p>
-                            <div>
-                                <ViewPlaylist playlistId={playlistId} />
-                            </div>
+                            <button 
+                                className="btn btn-primary"
+                                onClick={() => navigate(`/view-playlist/${playlistId}`)}
+                            >
+                                View Playlist
+                            </button>
+                            
                         </div>
                     )}
 

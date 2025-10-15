@@ -71,7 +71,8 @@ function NewPostForm() {
        
             {token ? (
                 <form
-                    className="post-form"
+                    className="post-form container"
+                    style={{width:"600px"}}
                     aria-label="New Post"
                     onSubmit={handleSubmit}
                 > 
