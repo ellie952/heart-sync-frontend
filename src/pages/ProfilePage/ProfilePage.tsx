@@ -61,6 +61,7 @@ function ProfilePage() {
 
                 const userProfileData = response.data.data;
                 setUser(userProfileData);
+                
             } catch (error: unknown) {
                 setHasError(true);
                 if (axios.isAxiosError(error)) {
@@ -113,7 +114,7 @@ function ProfilePage() {
         try {
             await axios.put(
                 `${USER_API_BASE_URL}/following`,
-                { followingId: user.PK },
+                { followingUsername: user.username },
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
