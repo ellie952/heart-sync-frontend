@@ -4,10 +4,10 @@ phases:
     runtime-versions:
       nodejs: 22
     commands:
-      - npm install -g vite@latest
+      - npm ci
   pre_build:
     commands:
-      - npm install
+      - echo "Installing dependencies complete"
   build:
     commands:
       - npm run build
