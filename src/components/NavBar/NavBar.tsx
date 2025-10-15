@@ -57,7 +57,7 @@ function NavBar() {
                                     <ul className="dropdown-menu">
                                     <li><a className="dropdown-item" href={`/profile/${encodeURIComponent(userId)}`}>My Profile</a></li>
                                     <li><a className="dropdown-item" href="/settings/edit-profile">Edit Profile</a></li>
-                                    <li><a className="dropdown-item" href="/settings/reset-password">Reset Password</a></li>
+                                    <li><a className="dropdown-item" href="/settings/password-reset">Reset Password</a></li>
                                     <li><a className="dropdown-item" href="/settings/delete-profile">Delete Profile</a></li>
                                     <li><hr className="dropdown-divider" /></li>
                                     <li><a className="dropdown-item" href="/">
