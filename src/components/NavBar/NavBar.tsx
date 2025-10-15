@@ -1,14 +1,20 @@
 import { jwtDecode } from "jwt-decode"
 import type { JwtPayloadType } from "../../interfaces/JwtPayloadType";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 
 function NavBar() {
     const { token, username, logout } = useAuth();
     const [userId, setUserId] = useState<string | null>(null);
+    const [searchUsername, setSearchUsername] = useState("");
 
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
+
+   function handleSearchUsername(e:ChangeEvent<HTMLInputElement>){
+     setSearchUsername(e.target.value);
+   }
+
     useEffect(() => {
         if (token) {
             const decodedToken = jwtDecode<JwtPayloadType>(token);
@@ -51,6 +57,27 @@ function NavBar() {
                                     <a className="nav-link" href="/spotify-connection">
                                         Spotify Connection
                                     </a>
+                                </li>  
+                                 <li className="nav-item">
+                                    <form className="d-flex" onSubmit={(e) => {
+                                        e.preventDefault();
+                                        navigate(`/search?query=${searchUsername}`);
+                                        
+                                    }}>
+                                        <input 
+                                            className="form-control me-2" 
+                                            type="search" 
+                                            name="search"
+                                            placeholder="Search users..." 
+                                            aria-label="Search"
+                                            value={searchUsername}
+                                            onChange={handleSearchUsername}
+
+                                        />
+                                        <button className="btn btn-outline-success" type="submit">
+                                            Search
+                                        </button>
+                                    </form>
                                 </li>  
                                 <li className="nav-item dropdown">
                                     <button className="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">@{username}</button>

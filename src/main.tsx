@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { BrowserRouter, Routes, Route } from "react-router";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import DashboardPage from './pages/DashboardPage/DashboardPage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
 import LoginPage from './pages/LoginPage/LoginPage';
@@ -17,12 +17,13 @@ import SpotifyConnectionPage from './pages/SpotifyConnection/SpotifyConnection';
 import SpotifyTokenSuccess from './components/SpotifyTokenSucess/SpotifyTokenSuccess';
 import LandingPage from './pages/LandingPage/LandingPage';
 import AuthProvider from './contexts/AuthContext';
+import SearchUsername from './components/SearchUsername/SearchUsername';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AuthProvider>
+      <BrowserRouter> 
       <NavBar />
-      <BrowserRouter>
         <Routes>
           <Route
             path="/"
@@ -59,6 +60,10 @@ createRoot(document.getElementById('root')!).render(
           <Route
             path="/spotify-success"
             element={<SpotifyTokenSuccess />}
+          />
+            <Route
+            path="/search"
+            element={<SearchUsername />}
           />
           <Route
             path="/settings"
