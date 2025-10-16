@@ -30,7 +30,7 @@ function Post({ PK, SK, pst_caption = "None", pst_media = "Empty", pst_activityT
     }, [PK]);
 
     return (
-        <div className="card" style={{width: "40rem", margin:"20px"}}>
+        <div className="card" style={{width: "30rem", margin:"20px", borderRadius:"15px"}}>
             <div className="card-body">
                 <h6>@{postAuthor}</h6>
                 <h3 className="card-title">{post.pst_activityType}</h3>

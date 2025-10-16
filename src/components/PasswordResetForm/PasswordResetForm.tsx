@@ -74,31 +74,48 @@ function PasswordResetForm() {
     return (
         <>
             {token ? (
-                <form
+                <form 
+                    style={{margin:"60px", width:"400px"}}
                     aria-label="Password Reset"
                     onSubmit={handleSubmit}
                 >
-                    <input
-                        type="password"
-                        placeholder="Old password"
-                        value={prevPassword}
-                        onChange={handlePrevPassword}
-                        required
-                    />
-                    <input
-                        type="password"
-                        placeholder="New password"
-                        value={newPassword}
-                        onChange={handleNewPassword}
-                        required
-                    />
-                    <input
-                        type="password"
-                        placeholder="Confirm new password"
-                        value={confirmedPassword}
-                        onChange={handleConfirmedPassword}
-                        required
-                    />
+
+                     <div className="form-floating mb-3">
+                        <input
+                            type="password"
+                            className="form-control"
+                            id="floating-old-password"
+                            placeholder="Old password"
+                            value={prevPassword}
+                            onChange={handlePrevPassword}
+                            required
+                        />
+                         <label htmlFor="floating-old-password">Old Password</label>
+                    </div>
+                     <div className="form-floating mb-3">
+                        <input
+                            type="password"
+                            className="form-control"
+                            id="floating-new-password"
+                            placeholder="new password"
+                            value={newPassword}
+                            onChange={handleNewPassword}
+                            required
+                        />
+                         <label htmlFor="floating-old-password">New Password</label>
+                    </div>
+                     <div className="form-floating mb-3">
+                        <input
+                            type="password"
+                            className="form-control"
+                            id="floating-confirm-password"
+                            placeholder="Confirm new password"
+                            value={confirmedPassword}
+                            onChange={handleConfirmedPassword}
+                            required
+                        />
+                         <label htmlFor="floating-old-password">Confirm New Password</label>
+                    </div>
                     <input type="submit" />
                     {hasError && (
                         <p>

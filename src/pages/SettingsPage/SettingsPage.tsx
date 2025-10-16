@@ -2,9 +2,14 @@ import { Outlet } from "react-router"
 
 function SettingsPage() {
     return (
-        <div>
-            <h1 data-test="title">Settings</h1>
-            <Outlet />
+        <div className="page"
+            style={{
+                paddingLeft:"40px",
+            }}> 
+                 <h1 data-test="title" className="container" style={{marginLeft:"0px"}}>Settings</h1>
+                <Outlet />
+            
+           
         </div>
     )
 }

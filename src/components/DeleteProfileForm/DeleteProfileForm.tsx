@@ -64,21 +64,30 @@ function DeleteProfileForm() {
         <>
             {token ? (
                 <form
+                    style={{margin:"60px", width:"400px"}}
                     aria-label="Delete Profile"
                     onSubmit={handleSubmit}
                 >
-                    <input
-                        type="text"
-                        placeholder="Confirm username"
-                        value={username}
-                        onChange={handleUsername}
-                    />
-                    <input
-                        type="password"
-                        placeholder="Confirm password"
-                        value={password}
-                        onChange={handlePassword}
-                    />
+                    <div className="form-floating mb-3"> 
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Confirm username"
+                            value={username}
+                            onChange={handleUsername}
+                        />
+                        <label htmlFor="floatingConfirmUserName">Confirm Username</label>
+                    </div>
+                    <div className="form-floating mb-3"> 
+                        <input
+                            type="password"
+                            className="form-control"
+                            placeholder="Confirm password"
+                            value={password}
+                            onChange={handlePassword}
+                        />
+                        <label htmlFor="floatingConfirmUserName">Confirm Password</label>
+                    </div>
                     <input type="submit" value="Delete My Profile" />
                     {hasError && (
                         <p>

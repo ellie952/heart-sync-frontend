@@ -1,5 +1,6 @@
 import { useParams } from "react-router"
 import PostList from "../../components/PostList/PostList"
+import "../../css/styles.css"
 
 function DashboardPage() {
     const { userId } = useParams<{ userId?: string }>();
@@ -9,9 +10,17 @@ function DashboardPage() {
     }
 
     return (
-        <div>
-            <h1 data-test="title">Dashboard</h1>
-            <PostList userId={encodeURIComponent(userId)} />
+        <div className="page" 
+             style={{
+                paddingLeft:"40px"
+                
+            }}>
+            <h1 data-test="title" className="container" >
+                Dashboard
+            </h1>
+            <div>
+                 <PostList userId={encodeURIComponent(userId)} />
+            </div>
         </div>
     )
 }
