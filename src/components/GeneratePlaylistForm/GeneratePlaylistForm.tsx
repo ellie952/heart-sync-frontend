@@ -2,8 +2,7 @@
 
 import axios from "axios";
 import { useState, type ChangeEvent, type FormEvent } from "react"
-import { Link } from "react-router";
-import ViewPlaylist from "../ViewPlaylist/ViewPlaylist";
+import { Link, useNavigate } from "react-router";
 import { useAuth } from "../../contexts/AuthContext";
 import { ENVIRONMENT } from "../../constants";
 import SpotifyConnection from "../SpotifyConnection/SpotifyConnection";
@@ -18,6 +17,8 @@ function GeneratePlaylistForm() {
     const [isGenerating, setIsGenerating] = useState(false);
 
     const { token } = useAuth();
+
+    const navigate = useNavigate();
 
     const USER_API_BASE_URL = `${ENVIRONMENT.VITE_API_BASE_URL}/playlist-builder`;
 
@@ -117,7 +118,7 @@ function GeneratePlaylistForm() {
         <>
             {token ? (
                 <form
-                    style={{margin:"60px", width:"400px"}}
+                    style={{ margin: "60px", width: "400px" }}
                     aria-label="Generate Playlist"
                     onSubmit={handleSubmit}
                 >
@@ -157,25 +158,25 @@ function GeneratePlaylistForm() {
 
                     <input type="submit" value="Generate Playlist" />
                     {hasError && (
-                        <div className="alert alert-danger" role="alert" style={{marginTop:"20px"}}>
+                        <div className="alert alert-danger" role="alert" style={{ marginTop: "20px" }}>
                             Error: Please provide a playlist name, at least a genre or artist, and make sure you've connected to Spotify.
                             <SpotifyConnection></SpotifyConnection>
                         </div>
                     )}
                     {!hasError && isGenerating && (
-                        <div style={{margin:"20px"}}className="spinner-border" role="status">
+                        <div style={{ margin: "20px" }} className="spinner-border" role="status">
                             <span className="visually-hidden" role="status">Generating Playlist...</span>
                         </div>
                     )}
                     {!hasError && complete && (
                         <div>
-                            <button 
+                            <button
                                 className="btn btn-primary"
                                 onClick={() => navigate(`/view-playlist/${playlistId}`)}
                             >
                                 View Playlist
                             </button>
-                            
+
                         </div>
                     )}
 

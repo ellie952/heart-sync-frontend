@@ -18,14 +18,13 @@ import SpotifyTokenSuccess from './components/SpotifyTokenSucess/SpotifyTokenSuc
 import LandingPage from './pages/LandingPage/LandingPage';
 import AuthProvider from './contexts/AuthContext';
 import SearchUsername from './components/SearchUsername/SearchUsername';
-import ViewPlaylist from './components/ViewPlaylist/ViewPlaylist';
 import ViewPlaylistPage from './pages/ViewPlaylistPage/ViewPlaylistPage';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AuthProvider>
-      <BrowserRouter> 
-      <NavBar />
+      <BrowserRouter>
+        <NavBar />
         <Routes>
           <Route
             path="/"
@@ -67,7 +66,7 @@ createRoot(document.getElementById('root')!).render(
             path="/spotify-success"
             element={<SpotifyTokenSuccess />}
           />
-            <Route
+          <Route
             path="/search"
             element={<SearchUsername />}
           />
