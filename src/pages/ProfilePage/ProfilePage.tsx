@@ -63,7 +63,7 @@ function ProfilePage() {
 
                 const userProfileData = response.data.data;
                 setUser(userProfileData);
-                
+
             } catch (error: unknown) {
                 setHasError(true);
                 if (axios.isAxiosError(error)) {
@@ -101,14 +101,14 @@ function ProfilePage() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isFollowing])
 
-    async function handleCopyProfileLink() {
-        if (!userId) {
-            setHasError(true);
-            return;
-        };
+    // async function handleCopyProfileLink() {
+    //     if (!userId) {
+    //         setHasError(true);
+    //         return;
+    //     };
 
-        await navigator.clipboard.writeText(`http://localhost:5173/profile/${encodeURIComponent(userId)}`)
-    }
+    //     await navigator.clipboard.writeText(`http://localhost:5173/profile/${encodeURIComponent(userId)}`)
+    // }
 
     async function handleFollow() {
         if (!user) return;
@@ -139,66 +139,66 @@ function ProfilePage() {
     return (
         <div className="page"
             style={{
-                paddingLeft:"40px",
-                justifyContent: "center", 
-                alignItems: "center", 
+                paddingLeft: "40px",
+                justifyContent: "center",
+                alignItems: "center",
                 textAlign: "center"
-            }}> 
+            }}>
             {user !== null && !hasError ? (
                 <>
-                <div className="container" style={{color:"rgba(236, 225, 225, 0.69)"}}>
-                    <div style={{color:"black"}}>
-                        <h1>{user.username}</h1>
-                        <p>Email: {user.email}</p>
-                    </div>
-                   
-
-                    {profilePicURL ? (
-                        <img width={"200px"} height={"200px"} style={{borderRadius:"50%"}}
-                            src={profilePicURL}
-                            // alt={`${user.username}'s profile picture`}
-                            onError={() => {
-                                console.error('Error loading profile picture');
-                            }}
-                        />
-                    ) : (
-                        <div style={{color:"black"}}>
-                            No Profile Image
+                    <div className="container" style={{ color: "rgba(236, 225, 225, 0.69)" }}>
+                        <div style={{ color: "black" }}>
+                            <h1>{user.username}</h1>
+                            <p>Email: {user.email}</p>
                         </div>
-                    )}
-                    <br></br>
-                    {username !== user.username ? (
-                        <button onClick={handleFollow}>
-                            Follow
-                        </button>
-                    ) : (
-                        <SpotifyConnection></SpotifyConnection>
-                        // <button onClick={handleCopyProfileLink} style={{margin:"20px"}}>
-                        //     Copy Profile Link
-                        // </button>
-                    )}
-                    {userPosts.length !== 0 ? (
-                        userPosts.map((post) => (
-                            <Post
-                                key={post.SK}
-                                PK={post.PK}
-                                SK={post.SK}
-                                pst_caption={post.pst_caption}
-                                pst_activityType={post.pst_activityType}
-                                pst_media={post.pst_media}
-                                pst_timestamp={post.pst_timestamp}
-                                playlist_spotifyURI={post.playlist_spotifyURI}
+
+
+                        {profilePicURL ? (
+                            <img width={"200px"} height={"200px"} style={{ borderRadius: "50%" }}
+                                src={profilePicURL}
+                                // alt={`${user.username}'s profile picture`}
+                                onError={() => {
+                                    console.error('Error loading profile picture');
+                                }}
                             />
-                        ))
-                    ) : (
-                        <p>No posts found!</p>
-                    )}
-                </div>
+                        ) : (
+                            <div style={{ color: "black" }}>
+                                No Profile Image
+                            </div>
+                        )}
+                        <br></br>
+                        {username !== user.username ? (
+                            <button onClick={handleFollow}>
+                                Follow
+                            </button>
+                        ) : (
+                            <SpotifyConnection></SpotifyConnection>
+                            // <button onClick={handleCopyProfileLink} style={{margin:"20px"}}>
+                            //     Copy Profile Link
+                            // </button>
+                        )}
+                        {userPosts.length !== 0 ? (
+                            userPosts.map((post) => (
+                                <Post
+                                    key={post.SK}
+                                    PK={post.PK}
+                                    SK={post.SK}
+                                    pst_caption={post.pst_caption}
+                                    pst_activityType={post.pst_activityType}
+                                    pst_media={post.pst_media}
+                                    pst_timestamp={post.pst_timestamp}
+                                    playlist_spotifyURI={post.playlist_spotifyURI}
+                                />
+                            ))
+                        ) : (
+                            <p>No posts found!</p>
+                        )}
+                    </div>
                 </>
             ) : isLoading ? (
-                 <div style={{wordSpacing:"20px"}}className="spinner-border" role="status">
-                            <span className="visually-hidden" role="status">Loading Profile...</span>
-                 </div>
+                <div style={{ wordSpacing: "20px" }} className="spinner-border" role="status">
+                    <span className="visually-hidden" role="status">Loading Profile...</span>
+                </div>
             ) : (
                 <h1>User not found!</h1>
             )}
