@@ -1,6 +1,5 @@
 import axios from "axios";
-import { useState, useEffect, type FormEvent } from "react";
-import { useNavigate } from "react-router";
+import { useState, useEffect } from "react";
 import { ENVIRONMENT } from "../../constants";
 import type { PlaylistType } from "../../interfaces/PlaylistType";
 
@@ -128,7 +127,7 @@ function ViewPlaylist({ playlistId }: ViewPlaylistProps) {
                         </svg>
                         <a href={spotifyPlaylistURL} style={{color:"white"}}>Listen on Spotify</a>
                     </button>
-                    
+
                     <table id="playlist-data" className="table table-striped">
                         <thead>
                             <tr>

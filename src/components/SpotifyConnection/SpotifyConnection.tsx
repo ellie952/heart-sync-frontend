@@ -1,12 +1,10 @@
-import axios from "axios";
-import { useState } from "react"
-import { Link, useNavigate } from "react-router";
+import { Link } from "react-router";
 import { ENVIRONMENT } from "../../constants";
 import { useAuth } from "../../contexts/AuthContext";
 
 function SpotifyConnection() {
-    const [isConnectedToSpotify, setIsConnectedToSpotify] = useState(false);
-    const [hasError, setHasError] = useState(false);
+    // const [isConnectedToSpotify, setIsConnectedToSpotify] = useState(false);
+    // const [hasError, setHasError] = useState(false);
 
     const { token } = useAuth();
 
@@ -14,16 +12,16 @@ function SpotifyConnection() {
 
     async function handleSpotifyConnection(e: React.MouseEvent<HTMLButtonElement>) {
         e.preventDefault();
-        setHasError(false);
+        // setHasError(false);
 
         // call to login with spotify
         try {
 
             window.location.href = `${USER_API_BASE_URL}/login`;
-            setIsConnectedToSpotify(true);
+            // setIsConnectedToSpotify(true);
 
         } catch (error: unknown) {
-            setHasError(true);
+            // setHasError(true);
             console.error("Error logging into Spotify:", error);
         }
     }

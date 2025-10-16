@@ -1,4 +1,6 @@
 import axios from "axios";
+import { jwtDecode } from "jwt-decode"
+import type { JwtPayloadType } from "../../interfaces/JwtPayloadType";
 import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router";
 import { ENVIRONMENT } from "../../constants";
@@ -73,8 +75,13 @@ function EditProfileForm() {
                         },
                     }
                 );
-
-                navigate("/settings");
+                localStorage.setItem("USERNAME", newUsername);
+                const spanElement = document.querySelector(".nav-link.dropdown-toggle");
+                if (spanElement) {
+                    spanElement.textContent = "@" + newUsername;
+                }
+                const decodedToken = jwtDecode<JwtPayloadType>(token);
+                navigate("/profile/" + encodeURIComponent(decodedToken.id));
             } catch (error: unknown) {
                 setHasError(true);
                 if (axios.isAxiosError(error)) {
