@@ -10,7 +10,6 @@ function ViewPlaylistPage() {
     return (
         <div className="page"  
              style={{
-                backgroundImage:'url("/Images/full-length-female-runner-listening-music-while-jogging-road-dawn.jpg")',
                 paddingLeft:"40px"
             }}>
             <ViewPlaylist playlistId={playlistId ?? ""}></ViewPlaylist>

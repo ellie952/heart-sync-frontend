@@ -12,7 +12,6 @@ function DashboardPage() {
     return (
         <div className="page" 
              style={{
-                backgroundImage:'url("/Images/balanced-woman-stretching-nature.jpg")',
                 paddingLeft:"40px"
                 
             }}>

@@ -7,6 +7,7 @@ import type { PostType } from "../../interfaces/PostType";
 import { useParams } from "react-router";
 import { ENVIRONMENT } from "../../constants";
 import "../../css/styles.css"
+import SpotifyConnection from "../../components/SpotifyConnection/SpotifyConnection";
 
 function ProfilePage() {
     const [user, setUser] = useState<UserType | null>(null);
@@ -136,11 +137,21 @@ function ProfilePage() {
     }
 
     return (
-        <div className="page">
+        <div className="page"
+            style={{
+                paddingLeft:"40px",
+                justifyContent: "center", 
+                alignItems: "center", 
+                textAlign: "center"
+            }}> 
             {user !== null && !hasError ? (
                 <>
-                    <h1>{user.username}</h1>
-                    <p>Email: {user.email}</p>
+                <div className="container" style={{color:"rgba(236, 225, 225, 0.69)"}}>
+                    <div style={{color:"black"}}>
+                        <h1>{user.username}</h1>
+                        <p>Email: {user.email}</p>
+                    </div>
+                   
 
                     {profilePicURL ? (
                         <img width={"200px"} height={"200px"} style={{borderRadius:"50%"}}
@@ -151,7 +162,7 @@ function ProfilePage() {
                             }}
                         />
                     ) : (
-                        <div>
+                        <div style={{color:"black"}}>
                             No Profile Image
                         </div>
                     )}
@@ -161,9 +172,10 @@ function ProfilePage() {
                             Follow
                         </button>
                     ) : (
-                        <button onClick={handleCopyProfileLink} style={{margin:"20px"}}>
-                            Copy Profile Link
-                        </button>
+                        <SpotifyConnection></SpotifyConnection>
+                        // <button onClick={handleCopyProfileLink} style={{margin:"20px"}}>
+                        //     Copy Profile Link
+                        // </button>
                     )}
                     {userPosts.length !== 0 ? (
                         userPosts.map((post) => (
@@ -181,6 +193,7 @@ function ProfilePage() {
                     ) : (
                         <p>No posts found!</p>
                     )}
+                </div>
                 </>
             ) : isLoading ? (
                  <div style={{wordSpacing:"20px"}}className="spinner-border" role="status">
@@ -189,7 +202,7 @@ function ProfilePage() {
             ) : (
                 <h1>User not found!</h1>
             )}
-        </div >
+        </div>
     )
 }
 

@@ -3,12 +3,8 @@ import GeneratePlaylistForm from "../../components/GeneratePlaylistForm/Generate
 
 function GeneratePlaylistPage() {
     return (
-        <div className="page"  
-             style={{
-                backgroundImage:'url("public/Images/full-length-female-runner-listening-music-while-jogging-road-dawn.jpg")',
-                paddingLeft:"40px"
-            }}>
-            <h3 className="container" style={{margin:"20px"}}data-test="title">Generate a Playlist</h3>
+        <div className="page" >
+            <h3 className="container" style={{marginLeft:"20px", marginBottom:"0px"}}data-test="title">Generate a Playlist</h3>
             <GeneratePlaylistForm></GeneratePlaylistForm>
         </div>
     )

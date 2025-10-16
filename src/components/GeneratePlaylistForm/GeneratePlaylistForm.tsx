@@ -6,6 +6,7 @@ import { Link, useNavigate, useSearchParams } from "react-router";
 import ViewPlaylist from "../ViewPlaylist/ViewPlaylist";
 import { useAuth } from "../../contexts/AuthContext";
 import { ENVIRONMENT } from "../../constants";
+import SpotifyConnection from "../SpotifyConnection/SpotifyConnection";
 
 function GeneratePlaylistForm() {
     const [artist, setArtist] = useState("");
@@ -158,12 +159,13 @@ function GeneratePlaylistForm() {
             
                     <input type="submit" value="Generate Playlist" />
                     {hasError && (
-                        <div className="alert alert-danger" role="alert">
+                        <div className="alert alert-danger" role="alert" style={{marginTop:"20px"}}>
                             Error: Please provide a playlist name, at least a genre or artist, and make sure you've connected to Spotify.
+                            <SpotifyConnection></SpotifyConnection>
                         </div>
                     )}
                     {!hasError && isGenerating && (
-                        <div style={{wordSpacing:"20px"}}className="spinner-border" role="status">
+                        <div style={{margin:"20px"}}className="spinner-border" role="status">
                             <span className="visually-hidden" role="status">Generating Playlist...</span>
                         </div>
                     )}

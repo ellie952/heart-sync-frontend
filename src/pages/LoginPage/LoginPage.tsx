@@ -5,7 +5,6 @@ function LoginPage() {
     return (
         <div className="page"
             style={{
-                backgroundImage:'url("/Images/landing-image.jpg")',
                 justifyContent: "center", 
                 alignItems: "center", 
                 textAlign: "center"}}>

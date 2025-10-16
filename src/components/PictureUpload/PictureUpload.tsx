@@ -61,14 +61,15 @@ function PictureUpload() {
     }
 
     return (
-        <form onSubmit={handlePictureUpload}>
+        <form onSubmit={handlePictureUpload} style={{width:"fit-content"}}>
             <input
                 type="file"
                 accept="image/jpeg"
                 onChange={handleFileChange}
                 required
             />
-            <button type="submit">Upload Image</button>
+            <br></br>
+            <button type="submit" style={{marginTop:"20px"}}>Upload Image</button>
             {hasError &&
                 <div style={{ color: "red" }}>Error uploading image.</div>}
             {pictureURL &&

@@ -90,14 +90,19 @@ function EditProfileForm() {
         <>
             {token ? (
                 <div>
-                    <h5>Add a Profile Picture</h5>
-                    <PictureUpload></PictureUpload>
+                    <div className="container" style={{marginLeft:"0px", marginTop:"20px", padding:"20px"}}>
+                        <h4>Add a Profile Picture</h4>
+                        <PictureUpload></PictureUpload>
+                    </div>
+                    
                     <br></br>
                     <form
+                        className="container"
+                        style={{marginLeft:"0px", marginTop:"20px", padding:"20px"}}
                         aria-label="Edit Profile"
                         onSubmit={handleSubmit}
                     >
-                        <h5>Change Username</h5>
+                        <h4>Change Username</h4>
                         <input
                             type="text"
                             placeholder="Username"

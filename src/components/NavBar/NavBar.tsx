@@ -29,9 +29,9 @@ function NavBar() {
             <div className="container-fluid">
                 <a className="navbar-brand" href="/">HeartSync</a>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         {userId !== null ? (
                             <>
+                            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                                 <li className="nav-item">
                                     <a className="nav-link" href={`/dashboard/${encodeURIComponent(userId)}`}>
                                         Dashboard
@@ -52,12 +52,14 @@ function NavBar() {
                                         New Post
                                     </a>
                                 </li>
+                            </ul>
                               
-                                <li className="nav-item">
+                                {/* <li className="nav-item">
                                     <a className="nav-link " href="/spotify-connection">
                                         Spotify Connection
                                     </a>
-                                </li>  
+                                </li>   */}
+                            <ul className="navbar-nav ms-auto d-flex align-items-center gap-3 mb-2 mb-lg-0">
                                  <li className="nav-item">
                                     <form className="d-flex" onSubmit={(e) => {
                                         e.preventDefault();
@@ -79,23 +81,24 @@ function NavBar() {
                                         </button>
                                     </form>
                                 </li>  
-                                <li className="nav-item dropdown">
+                                <li className="nav-item dropdown" >
                                     <button className="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">@{username}</button>
-                                    <ul className="dropdown-menu">
-                                    <li><a className="dropdown-item" href={`/profile/${encodeURIComponent(userId)}`}>My Profile</a></li>
-                                    <li><a className="dropdown-item" href="/settings/edit-profile">Edit Profile</a></li>
-                                    <li><a className="dropdown-item" href="/settings/password-reset">Reset Password</a></li>
-                                    <li><a className="dropdown-item" href="/settings/delete-profile">Delete Profile</a></li>
-                                    <li><hr className="dropdown-divider" /></li>
-                                    <li><a className="dropdown-item" href="/">
-                                        <button className="dropdown-item" onClick={() => {
-                                                logout();
-                                                 <Link to="/"></Link>
-                                            }}>Logout</button>
-                                        </a>
-                                    </li>
+                                    <ul className="dropdown-menu dropdown-menu-end">
+                                        <li><a className="dropdown-item" href={`/profile/${encodeURIComponent(userId)}`}>My Profile</a></li>
+                                        <li><a className="dropdown-item" href="/settings/edit-profile">Edit Profile</a></li>
+                                        <li><a className="dropdown-item" href="/settings/password-reset">Reset Password</a></li>
+                                        <li><a className="dropdown-item" href="/settings/delete-profile">Delete Profile</a></li>
+                                        <li><hr className="dropdown-divider" /></li>
+                                        <li><a className="dropdown-item" href="/">
+                                            <button className="dropdown-item" onClick={() => {
+                                                    logout();
+                                                    <Link to="/"></Link>
+                                                }}>Logout</button>
+                                            </a>
+                                        </li>
                                     </ul>
                                 </li>
+                            </ul>
                                 {/* <li className="nav-item">
                                     <a className="nav-link" href="/settings">
                                         Settings
@@ -103,7 +106,7 @@ function NavBar() {
                                 </li> */}
                             </>
                         ) : (
-                            <>
+                            <div className="navbar-nav ms-auto">
                                 <li className="nav-item">
                                     <a className="nav-link" href="/login">
                                         Login
@@ -114,9 +117,8 @@ function NavBar() {
                                         Register
                                     </a>
                                 </li>
-                            </>
+                            </div>
                         )}
-                    </ul>
                 </div>
             </div>
         </nav>
