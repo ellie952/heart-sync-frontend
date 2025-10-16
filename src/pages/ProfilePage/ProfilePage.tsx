@@ -60,7 +60,7 @@ function ProfilePage() {
                         "Content-Type": "application/json"
                     }
                 });
-
+                
                 const userProfileData = response.data.data;
                 setUser(userProfileData);
 
@@ -84,6 +84,8 @@ function ProfilePage() {
                 const userPostHistory = response.data.data;
                 userPostHistory.sort((a: PostType, b: PostType) => Number(b.pst_timestamp) - Number(a.pst_timestamp));
 
+                const myButton = document.querySelector('#followButton');
+                myButton?.remove();
                 setUserPosts(userPostHistory);
             } catch (error: unknown) {
                 setUserPosts([]);
@@ -124,6 +126,8 @@ function ProfilePage() {
                     },
                 }
             );
+            const myButton = document.querySelector('#followButton');
+            myButton?.remove();
 
             setIsFollowing(true);
         } catch (error: unknown) {
@@ -168,7 +172,7 @@ function ProfilePage() {
                         )}
                         <br></br>
                         {username !== user.username ? (
-                            <button onClick={handleFollow}>
+                            <button id="followButton" onClick={handleFollow}>
                                 Follow
                             </button>
                         ) : (
